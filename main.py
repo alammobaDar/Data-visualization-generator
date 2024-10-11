@@ -1,4 +1,4 @@
-from tkinter import Tk, Label, Button
+from tkinter import Tk, Label, Button, filedialog
 import tkinter as tk
 
 
@@ -35,13 +35,17 @@ class UI:
 
         self.upload_label = Label(self.upload_frame, text="Please upload your Excel file or CSV file", bg="red")
         self.upload_label.pack(pady=10)
-        self.upload_button = Button(self.upload_frame, text="upload")
+        self.upload_button = Button(self.upload_frame, text="upload", command=self.upload)
         self.upload_button.pack()
 
+    def upload(self):
+        filetypes =[
+           ("Excel files", "*.xlsx, *.xls"),
+            ("CSV files", "*.csv")
+        ]
 
+        file_name = filedialog.askopenfilename(title="Open file", filetypes=filetypes)
 
-        def upload():
-            self.window.tk
 
 
 if __name__ == "__main__":

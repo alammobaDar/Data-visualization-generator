@@ -1,6 +1,6 @@
 from tkinter import Tk, Label, Button, filedialog
 import tkinter as tk
-
+from tkinter.ttk import Combobox
 
 
 class UI:
@@ -37,6 +37,25 @@ class UI:
         self.upload_label.pack(pady=10)
         self.upload_button = Button(self.upload_frame, text="upload", command=self.upload)
         self.upload_button.pack()
+
+        #combo box for the type of plot that the user will going to use.
+
+        for i in range(10):
+            self.dashboard.columnconfigure(i, weight=1)
+
+
+        self.selected_plot = tk.StringVar()
+        self.select_plot = Combobox(self.dashboard, textvariable=self.selected_plot)
+
+        self.select_plot['values'] = [
+            "Plot",
+            "Hist",
+            "Scatter",
+            "bar",
+            "pie"
+        ]
+        self.select_plot['state'] = 'readonly'
+        self.select_plot.grid(row=0, column=0,columnspan=10, sticky='nsew', padx=100, pady=20)
 
     def upload(self):
         filetypes =[

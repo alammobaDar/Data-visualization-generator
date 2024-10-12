@@ -2,9 +2,12 @@ from tkinter import Tk, Label, Button, filedialog
 import tkinter as tk
 from tkinter.ttk import Combobox
 
-from select import select
+from modes import plot
+from modes import hist
+from modes import scatter
+from modes import bar
+from modes import pie
 
-from plot import Plot
 
 
 class UI:
@@ -67,7 +70,15 @@ class UI:
     def on_combo_box(self, event):
         selected_value = self.select_plot.get()
         if selected_value == "Plot":
-            Plot(self.dashboard)
+            plot.Plot(self.dashboard)
+        elif selected_value == "Hist":
+            hist.Hist(self.dashboard)
+        elif selected_value == "Scatter":
+            scatter.Scatter(self.dashboard)
+        elif selected_value == "Bar":
+            bar.Bar(self.dashboard)
+        elif selected_value == "Pie":
+            pie.Pie(self.dashboard)
 
 
     def upload(self):

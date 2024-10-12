@@ -47,10 +47,12 @@ class UI:
         for i in range(10):
             self.dashboard.columnconfigure(i, weight=1)
 
+        self.select_label = Label(self.dashboard, text="Please choose what kind of plot you want to use", bg="cyan")
+        self.select_label.grid(row=0, column=0, columnspan=7, sticky='nsew', pady=10)
 
         self.selected_plot = tk.StringVar()
-        self.select_plot = Combobox(self.dashboard, textvariable=self.selected_plot)
 
+        self.select_plot = Combobox(self.dashboard, textvariable=self.selected_plot)
         self.select_plot['values'] = [
             "Plot",
             "Hist",
@@ -59,7 +61,7 @@ class UI:
             "Pie"
         ]
         self.select_plot['state'] = 'readonly'
-        self.select_plot.grid(row=0, column=0,columnspan=10, sticky='nsew', padx=100, pady=20)
+        self.select_plot.grid(row=1, column=0,columnspan=10, sticky='nsew', padx=100)
         self.select_plot.bind("<<ComboboxSelected>>", self.on_combo_box)
 
     def on_combo_box(self, event):

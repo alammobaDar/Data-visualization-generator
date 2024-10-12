@@ -2,6 +2,10 @@ from tkinter import Tk, Label, Button, filedialog
 import tkinter as tk
 from tkinter.ttk import Combobox
 
+from select import select
+
+from plot import Plot
+
 
 class UI:
 
@@ -51,11 +55,18 @@ class UI:
             "Plot",
             "Hist",
             "Scatter",
-            "bar",
-            "pie"
+            "Bar",
+            "Pie"
         ]
         self.select_plot['state'] = 'readonly'
         self.select_plot.grid(row=0, column=0,columnspan=10, sticky='nsew', padx=100, pady=20)
+        self.select_plot.bind("<<ComboboxSelected>>", self.on_combo_box)
+
+    def on_combo_box(self, event):
+        selected_value = self.select_plot.get()
+        if selected_value == "Plot":
+            Plot(self.dashboard)
+
 
     def upload(self):
         filetypes =[

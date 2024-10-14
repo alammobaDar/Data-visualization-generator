@@ -8,8 +8,6 @@ from modes import scatter
 from modes import bar
 from modes import pie
 
-
-
 class UI:
 
     def __init__(self, window):
@@ -67,19 +65,36 @@ class UI:
         self.select_plot.grid(row=1, column=0,columnspan=10, sticky='nsew', padx=100)
         self.select_plot.bind("<<ComboboxSelected>>", self.on_combo_box)
 
+        #creating instances of plots.
+        self.plot_instance = plot.Plot(self.dashboard)
+        self.hist_instance = hist.Hist(self.dashboard)
+        self.bar_instance = bar.Bar(self.dashboard)
+        self.pie_instance = pie.Pie(self.dashboard)
+        self.scatter_instance = scatter.Scatter(self.dashboard)
+
+        #then forgets it
+        self.erase_frame()
+
+    def erase_frame(self):
+        self.plot_instance.plot_frame.destroy()
+        self.hist_instance.hist_frame.destroy()
+        self.scatter_instance.scatter_frame.destroy()
+        self.bar_instance.bar_frame.destroy()
+        self.pie_instance.pie_frame.destroy()
+
     def on_combo_box(self, event):
         selected_value = self.select_plot.get()
+        self.erase_frame()
         if selected_value == "Plot":
-            plot.Plot(self.dashboard)
+            self.plot_instance = plot.Plot(self.dashboard)
         elif selected_value == "Hist":
-            hist.Hist(self.dashboard)
+            self.hist_instance = hist.Hist(self.dashboard)
         elif selected_value == "Scatter":
-            scatter.Scatter(self.dashboard)
+            self.scatter_instance = scatter.Scatter(self.dashboard)
         elif selected_value == "Bar":
-            bar.Bar(self.dashboard)
+            self.bar_instance = bar.Bar(self.dashboard)
         elif selected_value == "Pie":
-            pie.Pie(self.dashboard)
-
+            self.pie_instance = pie.Pie(self.dashboard)
 
     def upload(self):
         filetypes =[

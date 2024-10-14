@@ -21,11 +21,7 @@ class Plot:
         self.x = Entry(self.plot_frame)
         self.x.grid(row= 3, column=2, columnspan=8, sticky='w')
 
-        self.y_label = Label(self.plot_frame,
-                             text="Y-axis:",
-                             font=("Arial", 10, "bold"),
-                             bg="cyan")
-
+        self.y_label = Label(self.plot_frame, text="Y-axis:", font=("Arial", 10, "bold"), bg="cyan")
         self.y_label.grid(row=4, column=0, columnspan=7, sticky='w', padx=5, pady=5)
         self.y = Entry(self.plot_frame)
         self.y.grid(row=4, column=2, columnspan=8, sticky='w')

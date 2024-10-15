@@ -17,11 +17,15 @@ class Pie:
         self.x = tk.Entry(self.pie_frame)
         self.x.grid(row=3, column=2, columnspan=8, sticky='w')
 
-        self.y_label = tk.Label(self.pie_frame,
-                                text="Y-axis:",
-                                font=("Arial", 10, "bold"),
-                                bg="cyan")
-
+        self.y_label = tk.Label(self.pie_frame, text="Y-axis:", font=("Arial", 10, "bold"), bg="cyan")
         self.y_label.grid(row=4, column=0, columnspan=7, sticky='w', padx=5, pady=5)
         self.y = tk.Entry(self.pie_frame)
         self.y.grid(row=4, column=2, columnspan=8, sticky='w')
+
+        self.optional_label = tk.Label(self.pie_frame, text="Optional", font=("Arial", 30, "italic"), bg="cyan")
+        self.optional_label.grid(row=5, column=0, columnspan=10, pady=20, sticky='w')
+
+        self.title_label = tk.Label(self.pie_frame, text="Title:", font=("Arial", 10, "bold"), bg="cyan")
+        self.title_label.grid(row=6, column=0, columnspan=7, sticky='w', padx=5, pady=5)
+        self.title = tk.Entry(self.pie_frame)
+        self.title.grid(row=6, column=2, columnspan=8, sticky='w')

@@ -1,6 +1,7 @@
-from tkinter import Tk, Label, Button, filedialog
+from tkinter import Tk, Label, Button, filedialog, ttk
 import tkinter as tk
 from tkinter.ttk import Combobox
+import pandas as pd
 
 from modes import kind_of_plots
 
@@ -103,6 +104,23 @@ class UI:
 
         file_name = filedialog.askopenfilename(title="Open file", filetypes=filetypes)
 
+        df = None
+        if file_name:
+            if file_name.endswith(".xlsx"):
+                df = pd.read_excel(file_name)
+            elif file_name.endswith(".csv"):
+                df = pd.read_csv(file_name)
+
+        return df
+
+    def show_df(self, df):
+
+        self.data_frame = tk.Frame(self.main_section, height=300, width=750, bg="pink")
+        self.data_frame.grid(row=0, column=0, sticky='nsew')
+
+        columns = list(df.columns)
+
+        tree = ttk.Treeview(self.data_frame, columns=columns, show='headings')
 
 
 if __name__ == "__main__":

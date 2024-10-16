@@ -44,3 +44,5 @@ class Plot:
         self.y_label = Entry(self.plot_frame)
         self.y_label.grid(row=8, column=2, columnspan=8, sticky='w')
 
+        self.submit = tk.Button(self.plot_frame, text="submit")
+        self.submit.grid(row=9, column=9, pady=20)

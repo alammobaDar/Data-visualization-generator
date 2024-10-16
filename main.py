@@ -2,11 +2,8 @@ from tkinter import Tk, Label, Button, filedialog
 import tkinter as tk
 from tkinter.ttk import Combobox
 
-from modes import plot
-from modes import hist
-from modes import scatter
-from modes import bar
-from modes import pie
+from modes import kind_of_plots
+
 
 class UI:
 
@@ -65,12 +62,14 @@ class UI:
         self.select_plot.grid(row=1, column=0,columnspan=10, sticky='nsew', padx=100)
         self.select_plot.bind("<<ComboboxSelected>>", self.on_combo_box)
 
+        self.pl = kind_of_plots
+
         #creating instances of plots.
-        self.plot_instance = plot.Plot(self.dashboard)
-        self.hist_instance = hist.Hist(self.dashboard)
-        self.bar_instance = bar.Bar(self.dashboard)
-        self.pie_instance = pie.Pie(self.dashboard)
-        self.scatter_instance = scatter.Scatter(self.dashboard)
+        self.plot_instance = self.pl.Plot(self.dashboard)
+        self.hist_instance = self.pl.Hist(self.dashboard)
+        self.bar_instance = self.pl.Bar(self.dashboard)
+        self.pie_instance = self.pl.Pie(self.dashboard)
+        self.scatter_instance = self.pl.Scatter(self.dashboard)
 
         #then forgets it
         self.erase_frame()
@@ -86,15 +85,15 @@ class UI:
         selected_value = self.select_plot.get()
         self.erase_frame()
         if selected_value == "Plot":
-            self.plot_instance = plot.Plot(self.dashboard)
+            self.plot_instance = self.pl.Plot(self.dashboard)
         elif selected_value == "Hist":
-            self.hist_instance = hist.Hist(self.dashboard)
+            self.hist_instance = self.pl.Hist(self.dashboard)
         elif selected_value == "Scatter":
-            self.scatter_instance = scatter.Scatter(self.dashboard)
+            self.scatter_instance = self.pl.Scatter(self.dashboard)
         elif selected_value == "Bar":
-            self.bar_instance = bar.Bar(self.dashboard)
+            self.bar_instance = self.pl.Bar(self.dashboard)
         elif selected_value == "Pie":
-            self.pie_instance = pie.Pie(self.dashboard)
+            self.pie_instance = self.pl.Pie(self.dashboard)
 
     def upload(self):
         filetypes =[

@@ -37,4 +37,6 @@ class Hist:
         self.y_label = tk.Entry(self.hist_frame)
         self.y_label.grid(row=8, column=2, columnspan=8, sticky='w')
 
+        self.submit = tk.Button(self.hist_frame, text="submit")
+        self.submit.grid(row=9, column=9, pady=20)
 

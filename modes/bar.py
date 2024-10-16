@@ -1,4 +1,6 @@
 import tkinter as tk
+from tkinter import Button
+
 
 class Bar:
     def __init__(self, window):
@@ -29,3 +31,6 @@ class Bar:
         self.title_label.grid(row=6, column=0, columnspan=7, sticky='w', padx=5, pady=5)
         self.title = tk.Entry(self.bar_frame)
         self.title.grid(row=6, column=2, columnspan=8, sticky='w')
+
+        self.submit = tk.Button(self.bar_frame, text="submit")
+        self.submit.grid(row=7, column=9, pady=20)

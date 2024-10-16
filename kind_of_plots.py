@@ -1,7 +1,14 @@
 import tkinter as tk
+from pickle import GLOBAL
 from tkinter import Tk, Entry, Label, Frame
 
+x = None
+y = None
+_title = None
+
 def title(frame):
+    global _title
+
     title_label = Label(frame, text="Title:", font=("Arial", 10, "bold"), bg="cyan")
     title_label.grid(row=6, column=0, columnspan=7, sticky='w', padx=5, pady=5)
     _title = Entry(frame)
@@ -9,6 +16,8 @@ def title(frame):
 
 
 def required_part(frame, type):
+    global x, y
+
     for i in range(10):
         frame.columnconfigure(i, weight=1)
     required_label = Label(frame, text="Required", font=("Arial", 30, "italic"), bg="cyan")
@@ -21,6 +30,7 @@ def required_part(frame, type):
         x = Entry(frame)
         x.grid(row=3, column=2, columnspan=8, sticky='w')
 
+
     if type == "hist" or type == "bar":
         pass
     else:
@@ -28,6 +38,8 @@ def required_part(frame, type):
         _y_label.grid(row=4, column=0, columnspan=7, sticky='w', padx=5, pady=5)
         y = Entry(frame)
         y.grid(row=4, column=2, columnspan=8, sticky='w')
+
+
 
 class Plot:
 

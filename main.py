@@ -1,11 +1,11 @@
-from tkinter import Tk, Label, Button, filedialog, ttk, Scrollbar
+from tkinter import Tk, Label, Button
 import tkinter as tk
-from tkinter.constants import VERTICAL, HORIZONTAL
 from tkinter.ttk import Combobox
-import pandas as pd
 
-from modes import kind_of_plots
-
+import kind_of_plots
+from kind_of_plots import x, y, _title
+from Table import upload, show_df
+from graphs import create_plot
 
 class UI:
 
@@ -97,48 +97,14 @@ class UI:
         elif selected_value == "Pie":
             self.pie_instance = self.pl.Pie(self.dashboard)
 
-    def upload(self):
-        filetypes =[
-            ("CSV files", "*.csv"),
-           ("Excel files", "*.xlsx, *.xls")
-        ]
-
-        file_name = filedialog.askopenfilename(title="Open file", filetypes=filetypes)
-
-        df = None
-        if file_name:
-            if file_name.endswith(".xlsx"):
-                df = pd.read_excel(file_name)
-            elif file_name.endswith(".csv"):
-                df = pd.read_csv(file_name)
-
-        return df
-
-    def show_df(self, df):
-
-        self.data_frame = tk.Frame(self.main_section, height=300, width=730, bg="pink")
-        self.data_frame.pack()
-
-        columns = list(df.columns)
-
-        tree = ttk.Treeview(self.data_frame, columns=columns, show='headings')
-        for col in df.columns:
-            tree.heading(col, text=col)
-        for _, rows in df.iterrows():
-            tree.insert("", "end", values=list(rows))
-
-        tree.pack()
-
-        horizontal_scrollbar = Scrollbar(self.data_frame, orient=HORIZONTAL, command=tree.xview)
-        tree.configure(xscrollcommand=horizontal_scrollbar.set)
-        horizontal_scrollbar.pack(anchor='s', fill=tk.X, expand=True)
-
     def load_and_display_data(self):
-        df = self.upload()
+        df = upload()
         if df is not None:
             self.upload_frame.destroy()
-            self.show_df(df)
+            show_df(df, self.main_section)
 
+    def display_plot(self):
+        create_plot(x, y)
 
 
 if __name__ == "__main__":

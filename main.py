@@ -38,7 +38,7 @@ class UI:
 
         self.upload_label = Label(self.upload_frame, text="Please upload your Excel file or CSV file", bg="red")
         self.upload_label.pack(pady=10)
-        self.upload_button = Button(self.upload_frame, text="upload", command=self.upload)
+        self.upload_button = Button(self.upload_frame, text="upload", command=self.load_and_display_data)
         self.upload_button.pack()
 
         #combo box for the type of plot that the user will going to use.
@@ -116,11 +116,25 @@ class UI:
     def show_df(self, df):
 
         self.data_frame = tk.Frame(self.main_section, height=300, width=750, bg="pink")
-        self.data_frame.grid(row=0, column=0, sticky='nsew')
+        self.data_frame.pack(side=tk.TOP, fill='both')
 
         columns = list(df.columns)
 
         tree = ttk.Treeview(self.data_frame, columns=columns, show='headings')
+
+        for col in df.columns:
+            tree.heading(col, text=col)
+
+        for _, rows in df.iterrows():
+            tree.insert("", "end", values=list(rows))
+
+        tree.pack()
+
+    def load_and_display_data(self):
+        df = self.upload()
+        if df is not None:
+            self.show_df(df)
+            self.upload_frame.destroy()
 
 
 if __name__ == "__main__":

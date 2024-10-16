@@ -1,5 +1,6 @@
-from tkinter import Tk, Label, Button, filedialog, ttk
+from tkinter import Tk, Label, Button, filedialog, ttk, Scrollbar
 import tkinter as tk
+from tkinter.constants import VERTICAL, HORIZONTAL
 from tkinter.ttk import Combobox
 import pandas as pd
 
@@ -98,8 +99,8 @@ class UI:
 
     def upload(self):
         filetypes =[
-           ("Excel files", "*.xlsx, *.xls"),
-            ("CSV files", "*.csv")
+            ("CSV files", "*.csv"),
+           ("Excel files", "*.xlsx, *.xls")
         ]
 
         file_name = filedialog.askopenfilename(title="Open file", filetypes=filetypes)
@@ -115,26 +116,29 @@ class UI:
 
     def show_df(self, df):
 
-        self.data_frame = tk.Frame(self.main_section, height=300, width=750, bg="pink")
-        self.data_frame.pack(side=tk.TOP, fill='both')
+        self.data_frame = tk.Frame(self.main_section, height=300, width=730, bg="pink")
+        self.data_frame.pack()
 
         columns = list(df.columns)
 
         tree = ttk.Treeview(self.data_frame, columns=columns, show='headings')
-
         for col in df.columns:
             tree.heading(col, text=col)
-
         for _, rows in df.iterrows():
             tree.insert("", "end", values=list(rows))
 
         tree.pack()
 
+        horizontal_scrollbar = Scrollbar(self.data_frame, orient=HORIZONTAL, command=tree.xview)
+        tree.configure(xscrollcommand=horizontal_scrollbar.set)
+        horizontal_scrollbar.pack(anchor='s', fill=tk.X, expand=True)
+
     def load_and_display_data(self):
         df = self.upload()
         if df is not None:
-            self.show_df(df)
             self.upload_frame.destroy()
+            self.show_df(df)
+
 
 
 if __name__ == "__main__":

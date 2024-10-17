@@ -10,12 +10,12 @@ _title = None
 
 def title(frame):
     optional_label = QLabel("Optional", frame)
-    optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
+    optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: white;")
     frame.layout().addWidget(optional_label, 5, 0)
 
     global _title
     title_label = QLabel("Title:", frame)
-    title_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+    title_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
     frame.layout().addWidget(title_label, 6, 0)
 
     _title = QLineEdit(frame)
@@ -27,14 +27,14 @@ def required_part(frame, type_):
     global x, y
 
     required_label = QLabel("Required", frame)
-    required_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
+    required_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: white;")
     frame.layout().addWidget(required_label, 2, 0)
 
 
 
     if type_ != "bar":
         x_label = QLabel("X-axis:", frame)
-        x_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        x_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
         frame.layout().addWidget(x_label, 3, 0)
 
         x = QLineEdit(frame)
@@ -44,7 +44,7 @@ def required_part(frame, type_):
 
     if type_ != "hist" and type_ != "bar":
         y_label = QLabel("Y-axis:", frame)
-        y_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        y_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
         frame.layout().addWidget(y_label, 4, 0)
 
         y = QLineEdit(frame)
@@ -56,7 +56,7 @@ class Plot:
     def __init__(self, window):
         self.window = window
         self.plot_frame = QFrame(self.window)
-        self.plot_frame.setStyleSheet("background-color: cyan; padding: 0px; margin: 0px")
+        self.plot_frame.setStyleSheet("background-color: white; padding: 0px; margin: 0px")
         layout = QGridLayout(self.plot_frame)
         self.plot_frame.setLayout(layout)
 
@@ -65,7 +65,7 @@ class Plot:
         title(self.plot_frame)
 
         self.x_label_label = QLabel("xlabel:", self.plot_frame)
-        self.x_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        self.x_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
         layout.addWidget(self.x_label_label, 7, 0)
 
         self.x_label = QLineEdit(self.plot_frame)
@@ -74,7 +74,7 @@ class Plot:
         layout.addWidget(self.x_label, 7, 2)
 
         self.y_label_label = QLabel("ylabel:", self.plot_frame)
-        self.y_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        self.y_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
         layout.addWidget(self.y_label_label, 8, 0)
 
         self.y_label = QLineEdit(self.plot_frame)
@@ -95,7 +95,7 @@ class Hist:
     def __init__(self, window):
         self.window = window
         self.hist_frame = QFrame(self.window)
-        self.hist_frame.setStyleSheet("background-color: blue; padding: 0px; margin: 0px")
+        self.hist_frame.setStyleSheet("background-color: white; padding: 0px; margin: 0px")
         layout = QGridLayout(self.hist_frame)
         self.hist_frame.setLayout(layout)
 
@@ -104,7 +104,7 @@ class Hist:
         title(self.hist_frame)
 
         self.x_label_label = QLabel("xlabel:", self.hist_frame)
-        self.x_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        self.x_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
         layout.addWidget(self.x_label_label, 7, 0)
 
         self.x_label = QLineEdit(self.hist_frame)
@@ -113,7 +113,7 @@ class Hist:
         layout.addWidget(self.x_label, 7, 2)
 
         self.y_label_label = QLabel("ylabel:", self.hist_frame)
-        self.y_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        self.y_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
         layout.addWidget(self.y_label_label, 8, 0)
 
         self.y_label = QLineEdit(self.hist_frame)
@@ -133,7 +133,7 @@ class Scatter:
     def __init__(self, window):
         self.window = window
         self.scatter_frame = QFrame(self.window)
-        self.scatter_frame.setStyleSheet("background-color: cyan; padding: 0px; margin: 0px")
+        self.scatter_frame.setStyleSheet("background-color: white; padding: 0px; margin: 0px")
         layout = QGridLayout(self.scatter_frame)
         self.scatter_frame.setLayout(layout)
 
@@ -142,7 +142,7 @@ class Scatter:
         title(self.scatter_frame)
 
         self.x_label_label = QLabel("xlabel:", self.scatter_frame)
-        self.x_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        self.x_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
         layout.addWidget(self.x_label_label, 7, 0)
 
         self.x_label = QLineEdit(self.scatter_frame)
@@ -151,7 +151,7 @@ class Scatter:
         layout.addWidget(self.x_label, 7, 2)
 
         self.y_label_label = QLabel("ylabel:", self.scatter_frame)
-        self.y_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        self.y_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
         layout.addWidget(self.y_label_label, 8, 0)
 
         self.y_label = QLineEdit(self.scatter_frame)
@@ -171,14 +171,14 @@ class Bar:
     def __init__(self, window):
         self.window = window
         self.bar_frame = QFrame(self.window)
-        self.bar_frame.setStyleSheet("background-color: cyan; padding: 0px; margin: 0px")
+        self.bar_frame.setStyleSheet("background-color: white; padding: 0px; margin: 0px")
         layout = QGridLayout(self.bar_frame)
         self.bar_frame.setLayout(layout)
 
         required_part(self.bar_frame, "bar")
 
         self.values_label = QLabel("Values:", self.bar_frame)
-        self.values_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        self.values_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
         layout.addWidget(self.values_label, 3, 0)
 
         self.values = QLineEdit(self.bar_frame)
@@ -187,13 +187,13 @@ class Bar:
         layout.addWidget(self.values, 3, 2)
 
         self.category_label = QLabel("Categories:", self.bar_frame)
-        self.category_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        self.category_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: white;")
         layout.addWidget(self.category_label, 4, 0)
 
         self.category = QLineEdit(self.bar_frame)
         self.category.setFixedSize(100, 30)
         self.category.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.category, 4, 3)
+        layout.addWidget(self.category, 4, 2)
 
         title(self.bar_frame)
 
@@ -209,7 +209,7 @@ class Pie:
     def __init__(self, window):
         self.window = window
         self.pie_frame = QFrame(self.window)
-        self.pie_frame.setStyleSheet("background-color: cyan; padding: 0px; margin: 0px")
+        self.pie_frame.setStyleSheet("background-color: white; padding: 0px; margin: 0px")
         layout = QGridLayout(self.pie_frame)
         self.pie_frame.setLayout(layout)
 

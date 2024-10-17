@@ -14,7 +14,7 @@ class UI(QMainWindow):
         super().__init__()
 
         self.setWindowTitle("Matplotlib Generator")
-        self.setGeometry(100, 100, 1200, 700)
+        self.setGeometry(100, 100, 1200, 900)
 
         # Main widget to hold all layouts and widgets
         central_widget = QWidget(self)
@@ -24,7 +24,7 @@ class UI(QMainWindow):
         # Title bar section
         self.title_bar = QFrame(self)
         self.title_bar.setFixedHeight(100)
-        self.title_bar.setStyleSheet("background-color: green;")
+        self.title_bar.setStyleSheet("background-color: gray;")
         title_layout = QVBoxLayout(self.title_bar)
         self._title = QLabel("Data Visualization Tool", self)
         self._title.setAlignment(Qt.AlignCenter)
@@ -38,14 +38,14 @@ class UI(QMainWindow):
 
         # Dashboard (left panel)
         self.dashboard = QFrame(self)
-        self.dashboard.setStyleSheet("background-color: cyan;")
+        self.dashboard.setStyleSheet("background-color: gray;")
         self.dashboard.setFixedWidth(450)
         dashboard_layout = QVBoxLayout(self.dashboard)
         content_layout.addWidget(self.dashboard)
 
         # Main section (right panel)
         self.main_section = QFrame(self)
-        self.main_section.setStyleSheet("background-color: red;")
+        self.main_section.setStyleSheet("background-color: white;")
         content_layout.addWidget(self.main_section)
         self.main_section_layout = QVBoxLayout(self.main_section)
 
@@ -63,12 +63,11 @@ class UI(QMainWindow):
         # ComboBox for selecting plot type
         self.combo_box_frame = QFrame()
         combo_box_frame_layout = QVBoxLayout(self.combo_box_frame)
-        self.combo_box_frame.setStyleSheet("background-color: pink; padding: 0px; margin: 0px")
+        self.combo_box_frame.setStyleSheet("background-color: gray; padding: 0px; margin: 0px")
         self.select_label = QLabel("Please choose what kind of plot you want to use", self)
         self.selected_plot = QComboBox(self)
         self.selected_plot.addItems(["Plot", "Hist", "Scatter", "Bar", "Pie"])
         self.selected_plot.currentIndexChanged.connect(self.on_combo_box)
-
 
         combo_box_frame_layout.addWidget(self.select_label, alignment=Qt.AlignCenter | Qt.AlignTop)
         combo_box_frame_layout.addWidget(self.selected_plot, alignment=Qt.AlignCenter | Qt.AlignTop)
@@ -76,7 +75,7 @@ class UI(QMainWindow):
         # creating a container for the kind_of_plots to be placed
         self.plots_frame = QFrame()
         plots_frame_layout = QVBoxLayout(self.plots_frame)
-        self.plots_frame.setStyleSheet("background-color: green; padding: 0px; margin: 0px")
+        self.plots_frame.setStyleSheet("background-color: gray; padding: 0px; margin: 0px")
 
         # Creating instances of plots
         self.pl = kind_of_plots
@@ -93,8 +92,6 @@ class UI(QMainWindow):
         plots_frame_layout.addWidget(self.pie_instance.get_frame(), alignment=Qt.AlignTop)
 
         self.erase_frame()
-
-
 
         # Add plots frame to the layout
         dashboard_layout.addWidget(self.plots_frame)

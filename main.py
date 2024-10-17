@@ -1,113 +1,123 @@
-from tkinter import Tk, Label, Button
-import tkinter as tk
-from tkinter.ttk import Combobox
+import sys
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QFrame, \
+    QComboBox, QGridLayout, QSizePolicy
+from PyQt5.QtCore import Qt
 
 import kind_of_plots
 from kind_of_plots import x, y, _title
 from Table import upload, show_df
 from graphs import create_plot
 
-class UI:
+class UI(QMainWindow):
+    def __init__(self):
+        super().__init__()
 
-    def __init__(self, window):
-        self.window = window
-        self.window.title("Matplotlib Generator")
-        self.window.geometry("1200x700")
+        self.setWindowTitle("Matplotlib Generator")
+        self.setGeometry(100, 100, 1200, 700)
 
-        # Configure grid layout to allow expansion
-        self.window.grid_columnconfigure(0)  # For dashboard
-        self.window.grid_columnconfigure(1, weight=2)  # For main_section
-        self.window.grid_rowconfigure(1, weight=1)  # For both dashboard and main_section
+        # Main widget to hold all layouts and widgets
+        central_widget = QWidget(self)
+        self.setCentralWidget(central_widget)
+        main_layout = QVBoxLayout(central_widget)
 
-        #Division of the whole window
-        self.title_bar = tk.Frame(self.window, bg="green", height=100, width=1200)
-        self.title_bar.grid(row=0, column=0, columnspan=2, sticky="ew")
+        # Title bar section
+        self.title_bar = QFrame(self)
+        self.title_bar.setFixedHeight(100)
+        self.title_bar.setStyleSheet("background-color: green;")
+        title_layout = QVBoxLayout(self.title_bar)
+        self._title = QLabel("Data Visualization Tool", self)
+        self._title.setAlignment(Qt.AlignCenter)
+        self._title.setStyleSheet("font-size: 25px; font-weight: bold; color: white;")
+        title_layout.addWidget(self._title)
+        main_layout.addWidget(self.title_bar)
 
-        self.dashboard = tk.Frame(self.window, bg="cyan", height=600, width=450)
-        self.dashboard.grid(row=1, column=0, sticky="ns")
+        # Main content section with dashboard and plot area
+        content_layout = QHBoxLayout()
+        main_layout.addLayout(content_layout)
 
-        self.main_section = tk.Frame(self.window, bg="red", height=600, width=750)
-        self.main_section.grid(row=1, column=1, sticky='nsew')
+        # Dashboard (left panel)
+        self.dashboard = QFrame(self)
+        self.dashboard.setStyleSheet("background-color: cyan;")
+        self.dashboard.setFixedWidth(450)
+        dashboard_layout = QGridLayout(self.dashboard)
+        content_layout.addWidget(self.dashboard)
 
-        #Header
-        self._title = Label(self.title_bar, text="Data Visualization Tool", font=("Courier", 25, "bold"), bg="green")
-        self._title.pack()
+        # Main section (right panel)
+        self.main_section = QFrame(self)
+        self.main_section.setStyleSheet("background-color: red;")
+        content_layout.addWidget(self.main_section)
+        main_section_layout = QVBoxLayout(self.main_section)
 
-        # Frame to hold label and button, centered
-        self.upload_frame = tk.Frame(self.main_section, bg="red")  # Wrapper frame for centering
-        self.upload_frame.pack(expand=True)  # Make the frame fill available space
+        # Upload Frame
+        self.upload_frame = QFrame(self.main_section)
+        upload_layout = QVBoxLayout(self.upload_frame)
+        self.upload_label = QLabel("Please upload your Excel file or CSV file", self)
+        self.upload_button = QPushButton("Upload", self)
+        self.upload_button.clicked.connect(self.load_and_display_data)
 
-        self.upload_label = Label(self.upload_frame, text="Please upload your Excel file or CSV file", bg="red")
-        self.upload_label.pack(pady=10)
-        self.upload_button = Button(self.upload_frame, text="upload", command=self.load_and_display_data)
-        self.upload_button.pack()
+        upload_layout.addWidget(self.upload_label, alignment=Qt.AlignCenter)
+        upload_layout.addWidget(self.upload_button, alignment=Qt.AlignCenter)
+        main_section_layout.addWidget(self.upload_frame, alignment=Qt.AlignCenter)
 
-        #combo box for the type of plot that the user will going to use.
+        # ComboBox for selecting plot type
 
-        for i in range(10):
-            self.dashboard.columnconfigure(i, weight=1)
+        self.combo_box_frame = QFrame(self.dashboard)
+        combo_box_frame_layout = QVBoxLayout(self.combo_box_frame)
+        self.select_label = QLabel("Please choose what kind of plot you want to use", self)
+        self.selected_plot = QComboBox(self)
+        self.selected_plot.addItems(["Plot", "Hist", "Scatter", "Bar", "Pie"])
+        self.selected_plot.currentIndexChanged.connect(self.on_combo_box)
 
-        self.select_label = Label(self.dashboard, text="Please choose what kind of plot you want to use", bg="cyan")
-        self.select_label.grid(row=0, column=0, columnspan=7, sticky='nsew', pady=10)
 
-        self.selected_plot = tk.StringVar()
+        combo_box_frame_layout.addWidget(self.select_label, alignment=Qt.AlignCenter | Qt.AlignTop)
+        combo_box_frame_layout.addWidget(self.selected_plot, alignment=Qt.AlignCenter | Qt.AlignTop)
+        dashboard_layout.addWidget(self.combo_box_frame, 0, 0, 1, 10, alignment=Qt.AlignCenter | Qt.AlignTop)
 
-        self.select_plot = Combobox(self.dashboard, textvariable=self.selected_plot)
-        self.select_plot['values'] = [
-            "Plot",
-            "Hist",
-            "Scatter",
-            "Bar",
-            "Pie"
-        ]
-        self.select_plot['state'] = 'readonly'
-        self.select_plot.grid(row=1, column=0,columnspan=10, sticky='nsew', padx=100)
-        self.select_plot.bind("<<ComboboxSelected>>", self.on_combo_box)
-
+        # Creating instances of plots
         self.pl = kind_of_plots
-
-        #creating instances of plots.
         self.plot_instance = self.pl.Plot(self.dashboard)
         self.hist_instance = self.pl.Hist(self.dashboard)
         self.bar_instance = self.pl.Bar(self.dashboard)
         self.pie_instance = self.pl.Pie(self.dashboard)
         self.scatter_instance = self.pl.Scatter(self.dashboard)
 
-        #then forgets it
         self.erase_frame()
 
     def erase_frame(self):
-        self.plot_instance.plot_frame.destroy()
-        self.hist_instance.hist_frame.destroy()
-        self.scatter_instance.scatter_frame.destroy()
-        self.bar_instance.bar_frame.destroy()
-        self.pie_instance.pie_frame.destroy()
+        # Clear plot frames when switching between plot types
+        self.plot_instance.plot_frame.setVisible(False)
+        self.hist_instance.hist_frame.setVisible(False)
+        self.scatter_instance.scatter_frame.setVisible(False)
+        self.bar_instance.bar_frame.setVisible(False)
+        self.pie_instance.pie_frame.setVisible(False)
 
-    def on_combo_box(self, event):
-        selected_value = self.select_plot.get()
+    def on_combo_box(self):
+        selected_value = self.selected_plot.currentText()
         self.erase_frame()
+
+        # Show the selected plot's frame
         if selected_value == "Plot":
-            self.plot_instance = self.pl.Plot(self.dashboard)
+            self.plot_instance.plot_frame.setVisible(True)
         elif selected_value == "Hist":
-            self.hist_instance = self.pl.Hist(self.dashboard)
+            self.hist_instance.hist_frame.setVisible(True)
         elif selected_value == "Scatter":
-            self.scatter_instance = self.pl.Scatter(self.dashboard)
+            self.scatter_instance.scatter_frame.setVisible(True)
         elif selected_value == "Bar":
-            self.bar_instance = self.pl.Bar(self.dashboard)
+            self.bar_instance.bar_frame.setVisible(True)
         elif selected_value == "Pie":
-            self.pie_instance = self.pl.Pie(self.dashboard)
+            self.pie_instance.pie_frame.setVisible(True)
 
     def load_and_display_data(self):
         df = upload()
         if df is not None:
-            self.upload_frame.destroy()
+            self.upload_frame.setVisible(False)
             show_df(df, self.main_section)
 
     def display_plot(self):
         create_plot(x, y)
 
-
 if __name__ == "__main__":
-    window = Tk()
-    ui = UI(window)
-    window.mainloop()
+    app = QApplication(sys.argv)
+    window = UI()
+    window.show()
+    sys.exit(app.exec_())

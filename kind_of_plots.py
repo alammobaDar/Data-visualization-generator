@@ -1,6 +1,5 @@
-import tkinter as tk
-from pickle import GLOBAL
-from tkinter import Tk, Entry, Label, Frame
+import sys
+from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QVBoxLayout, QHBoxLayout, QPushButton, QFrame, QWidget, QGridLayout, QMainWindow
 
 x = None
 y = None
@@ -8,164 +7,183 @@ _title = None
 
 def title(frame):
     global _title
+    title_label = QLabel("Title:", frame)
+    title_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+    frame.layout().addWidget(title_label, 6, 0)
 
-    title_label = Label(frame, text="Title:", font=("Arial", 10, "bold"), bg="cyan")
-    title_label.grid(row=6, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-    _title = Entry(frame)
-    _title.grid(row=6, column=2, columnspan=8, sticky='w')
+    _title = QLineEdit(frame)
+    frame.layout().addWidget(_title, 6, 2)
 
-
-def required_part(frame, type):
+def required_part(frame, type_):
     global x, y
 
-    for i in range(10):
-        frame.columnconfigure(i, weight=1)
-    required_label = Label(frame, text="Required", font=("Arial", 30, "italic"), bg="cyan")
-    required_label.grid(row=2, column=0, columnspan=10, pady=20, sticky='w')
-    if type == "bar":
-        pass
-    else:
-        _x_label = Label(frame, text="X-axis:", font=("Arial", 10, "bold"), bg='cyan')
-        _x_label.grid(row=3, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-        x = Entry(frame)
-        x.grid(row=3, column=2, columnspan=8, sticky='w')
+    required_label = QLabel("Required", frame)
+    required_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
+    frame.layout().addWidget(required_label, 2, 0)
 
+    if type_ != "bar":
+        x_label = QLabel("X-axis:", frame)
+        x_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        frame.layout().addWidget(x_label, 3, 0)
 
-    if type == "hist" or type == "bar":
-        pass
-    else:
-        _y_label = Label(frame, text="Y-axis:", font=("Arial", 10, "bold"), bg="cyan")
-        _y_label.grid(row=4, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-        y = Entry(frame)
-        y.grid(row=4, column=2, columnspan=8, sticky='w')
+        x = QLineEdit(frame)
+        frame.layout().addWidget(x, 3, 2)
 
+    if type_ != "hist" and type_ != "bar":
+        y_label = QLabel("Y-axis:", frame)
+        y_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        frame.layout().addWidget(y_label, 4, 0)
 
+        y = QLineEdit(frame)
+        frame.layout().addWidget(y, 4, 2)
 
 class Plot:
-
     def __init__(self, window):
         self.window = window
-
-        self.plot_frame = Frame(self.window, height=400, bg="cyan")
-        self.plot_frame.grid(row=2, column=0, columnspan=10, sticky='sew')
+        self.plot_frame = QFrame(self.window)
+        self.plot_frame.setStyleSheet("background-color: cyan; height: 400px;")
+        layout = QGridLayout(self.plot_frame)
+        self.plot_frame.setLayout(layout)
 
         required_part(self.plot_frame, "plot")
 
-        self.optional_label = Label(self.plot_frame, text="Optional", font=("Arial", 30, "italic"), bg="cyan")
-        self.optional_label.grid(row=5, column=0, columnspan=10, pady=20, sticky='w')
+        self.optional_label = QLabel("Optional", self.plot_frame)
+        self.optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
+        layout.addWidget(self.optional_label, 5, 0)
 
         title(self.plot_frame)
 
-        self.x_label_label = Label(self.plot_frame, text="xlabel:", font=("Arial", 10, "bold"), bg="cyan")
-        self.x_label_label.grid(row=7, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-        self.x_label = Entry(self.plot_frame)
-        self.x_label.grid(row=7, column=2, columnspan=8, sticky='w')
+        self.x_label_label = QLabel("xlabel:", self.plot_frame)
+        self.x_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        layout.addWidget(self.x_label_label, 7, 0)
 
-        self.y_label_label = Label(self.plot_frame, text="ylabel:", font=("Arial", 10, "bold"), bg="cyan")
-        self.y_label_label.grid(row=8, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-        self.y_label = Entry(self.plot_frame)
-        self.y_label.grid(row=8, column=2, columnspan=8, sticky='w')
+        self.x_label = QLineEdit(self.plot_frame)
+        layout.addWidget(self.x_label, 7, 2)
 
-        self.submit = tk.Button(self.plot_frame, text="submit")
-        self.submit.grid(row=9, column=9, pady=20)
+        self.y_label_label = QLabel("ylabel:", self.plot_frame)
+        self.y_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        layout.addWidget(self.y_label_label, 8, 0)
 
+        self.y_label = QLineEdit(self.plot_frame)
+        layout.addWidget(self.y_label, 8, 2)
+
+        self.submit = QPushButton("Submit", self.plot_frame)
+        layout.addWidget(self.submit, 9, 9)
 
 class Hist:
-
     def __init__(self, window):
         self.window = window
-
-        self.hist_frame = tk.Frame(self.window, height=400, bg="cyan")
-        self.hist_frame.grid(row=2, column=0, columnspan=10, sticky='sew')
+        self.hist_frame = QFrame(self.window)
+        self.hist_frame.setStyleSheet("background-color: cyan; height: 400px;")
+        layout = QGridLayout(self.hist_frame)
+        self.hist_frame.setLayout(layout)
 
         required_part(self.hist_frame, "hist")
 
-        self.optional_label = tk.Label(self.hist_frame, text="Optional", font=("Arial", 30, "italic"), bg="cyan")
-        self.optional_label.grid(row=5, column=0, columnspan=10, pady=20, sticky='w')
+        self.optional_label = QLabel("Optional", self.hist_frame)
+        self.optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
+        layout.addWidget(self.optional_label, 5, 0)
 
         title(self.hist_frame)
 
-        self.x_label_label = tk.Label(self.hist_frame, text="xlabel:", font=("Arial", 10, "bold"), bg="cyan")
-        self.x_label_label.grid(row=7, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-        self.x_label = tk.Entry(self.hist_frame)
-        self.x_label.grid(row=7, column=2, columnspan=8, sticky='w')
+        self.x_label_label = QLabel("xlabel:", self.hist_frame)
+        self.x_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        layout.addWidget(self.x_label_label, 7, 0)
 
-        self.y_label_label = tk.Label(self.hist_frame, text="ylabel:", font=("Arial", 10, "bold"), bg="cyan")
-        self.y_label_label.grid(row=8, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-        self.y_label = tk.Entry(self.hist_frame)
-        self.y_label.grid(row=8, column=2, columnspan=8, sticky='w')
+        self.x_label = QLineEdit(self.hist_frame)
+        layout.addWidget(self.x_label, 7, 2)
 
-        self.submit = tk.Button(self.hist_frame, text="submit")
-        self.submit.grid(row=9, column=9, pady=20)
+        self.y_label_label = QLabel("ylabel:", self.hist_frame)
+        self.y_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        layout.addWidget(self.y_label_label, 8, 0)
+
+        self.y_label = QLineEdit(self.hist_frame)
+        layout.addWidget(self.y_label, 8, 2)
+
+        self.submit = QPushButton("Submit", self.hist_frame)
+        layout.addWidget(self.submit, 9, 9)
 
 class Scatter:
-
     def __init__(self, window):
         self.window = window
-
-        self.scatter_frame = tk.Frame(self.window, height=400, bg="cyan")
-        self.scatter_frame.grid(row=2, column=0, columnspan=10, sticky='sew')
+        self.scatter_frame = QFrame(self.window)
+        self.scatter_frame.setStyleSheet("background-color: cyan; height: 400px;")
+        layout = QGridLayout(self.scatter_frame)
+        self.scatter_frame.setLayout(layout)
 
         required_part(self.scatter_frame, "scatter")
 
-        self.optional_label = tk.Label(self.scatter_frame, text="Optional", font=("Arial", 30, "italic"), bg="cyan")
-        self.optional_label.grid(row=5, column=0, columnspan=10, pady=20, sticky='w')
+        self.optional_label = QLabel("Optional", self.scatter_frame)
+        self.optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
+        layout.addWidget(self.optional_label, 5, 0)
 
         title(self.scatter_frame)
 
-        self.x_label_label = tk.Label(self.scatter_frame, text="xlabel:", font=("Arial", 10, "bold"), bg="cyan")
-        self.x_label_label.grid(row=7, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-        self.x_label = tk.Entry(self.scatter_frame)
-        self.x_label.grid(row=7, column=2, columnspan=8, sticky='w')
+        self.x_label_label = QLabel("xlabel:", self.scatter_frame)
+        self.x_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        layout.addWidget(self.x_label_label, 7, 0)
 
-        self.y_label_label = tk.Label(self.scatter_frame, text="ylabel:", font=("Arial", 10, "bold"), bg="cyan")
-        self.y_label_label.grid(row=8, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-        self.y_label = tk.Entry(self.scatter_frame)
-        self.y_label.grid(row=8, column=2, columnspan=8, sticky='w')
+        self.x_label = QLineEdit(self.scatter_frame)
+        layout.addWidget(self.x_label, 7, 2)
 
-        self.submit = tk.Button(self.scatter_frame, text="submit")
-        self.submit.grid(row=9, column=9, pady=20)
+        self.y_label_label = QLabel("ylabel:", self.scatter_frame)
+        self.y_label_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        layout.addWidget(self.y_label_label, 8, 0)
+
+        self.y_label = QLineEdit(self.scatter_frame)
+        layout.addWidget(self.y_label, 8, 2)
+
+        self.submit = QPushButton("Submit", self.scatter_frame)
+        layout.addWidget(self.submit, 9, 9)
 
 class Bar:
     def __init__(self, window):
         self.window = window
-
-        self.bar_frame = tk.Frame(self.window, height=400, bg="cyan")
-        self.bar_frame.grid(row=2, column=0, columnspan=10, sticky='sew')
+        self.bar_frame = QFrame(self.window)
+        self.bar_frame.setStyleSheet("background-color: cyan; height: 400px;")
+        layout = QGridLayout(self.bar_frame)
+        self.bar_frame.setLayout(layout)
 
         required_part(self.bar_frame, "bar")
 
-        self.values_label = tk.Label(self.bar_frame, text="Values:", font=("Arial", 10, "bold"), bg='cyan')
-        self.values_label.grid(row=3, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-        self.values = tk.Entry(self.bar_frame)
-        self.values.grid(row=3, column=2, columnspan=8, sticky='w')
+        self.values_label = QLabel("Values:", self.bar_frame)
+        self.values_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        layout.addWidget(self.values_label, 3, 0)
 
-        self.category_label = tk.Label(self.bar_frame, text="Categories:", font=("Arial", 10, "bold"), bg="cyan")
-        self.category_label.grid(row=4, column=0, columnspan=7, sticky='w', padx=5, pady=5)
-        self.category = tk.Entry(self.bar_frame)
-        self.category.grid(row=4, column=3, columnspan=8, sticky='w')
+        self.values = QLineEdit(self.bar_frame)
+        layout.addWidget(self.values, 3, 2)
 
-        self.optional_label = tk.Label(self.bar_frame, text="Optional", font=("Arial", 30, "italic"), bg="cyan")
-        self.optional_label.grid(row=5, column=0, columnspan=10, pady=20, sticky='w')
+        self.category_label = QLabel("Categories:", self.bar_frame)
+        self.category_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
+        layout.addWidget(self.category_label, 4, 0)
+
+        self.category = QLineEdit(self.bar_frame)
+        layout.addWidget(self.category, 4, 3)
+
+        self.optional_label = QLabel("Optional", self.bar_frame)
+        self.optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
+        layout.addWidget(self.optional_label, 5, 0)
 
         title(self.bar_frame)
 
-        self.submit = tk.Button(self.bar_frame, text="submit")
-        self.submit.grid(row=7, column=9, pady=20)
+        self.submit = QPushButton("Submit", self.bar_frame)
+        layout.addWidget(self.submit, 7, 9)
 
 class Pie:
     def __init__(self, window):
         self.window = window
-
-        self.pie_frame = tk.Frame(self.window, height=400, bg="cyan")
-        self.pie_frame.grid(row=2, column=0, columnspan=10, sticky='sew')
+        self.pie_frame = QFrame(self.window)
+        self.pie_frame.setStyleSheet("background-color: cyan; height: 400px;")
+        layout = QGridLayout(self.pie_frame)
+        self.pie_frame.setLayout(layout)
 
         required_part(self.pie_frame, "pie")
 
-        self.optional_label = tk.Label(self.pie_frame, text="Optional", font=("Arial", 30, "italic"), bg="cyan")
-        self.optional_label.grid(row=5, column=0, columnspan=10, pady=20, sticky='w')
+        self.optional_label = QLabel("Optional", self.pie_frame)
+        self.optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
+        layout.addWidget(self.optional_label, 5, 0)
 
         title(self.pie_frame)
 
-        self.submit = tk.Button(self.pie_frame, text="submit")
-        self.submit.grid(row=7, column=9, pady=20)
+        self.submit = QPushButton("Submit", self.pie_frame)
+        layout.addWidget(self.submit, 7, 9)

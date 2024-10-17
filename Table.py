@@ -1,18 +1,16 @@
-import tkinter as tk
-from tkinter import Tk, filedialog, Scrollbar, HORIZONTAL, ttk
+import sys
+from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QMainWindow, QFileDialog, \
+    QFrame, QScrollBar, QTableWidget, QTableWidgetItem, QWidget, QHeaderView
 import pandas as pd
 
-def upload():
-    filetypes = [
-        ("CSV files", "*.csv"),
-        ("Excel files", "*.xlsx, *.xls")
-    ]
 
-    file_name = filedialog.askopenfilename(title="Open file", filetypes=filetypes)
+def upload():
+    file_name, _ = QFileDialog.getOpenFileName(None, "Open file", "",
+                                               "CSV files (*.csv);;Excel files (*.xlsx, *.xls)")
 
     df = None
     if file_name:
-        if file_name.endswith(".xlsx"):
+        if file_name.endswith(".xlsx") or file_name.endswith(".xls"):
             df = pd.read_excel(file_name)
         elif file_name.endswith(".csv"):
             df = pd.read_csv(file_name)
@@ -21,21 +19,30 @@ def upload():
 
 
 def show_df(df, frame):
-    data_frame = tk.Frame(frame, height=300, width=730, bg="pink")
-    data_frame.pack()
+    # Remove existing widgets from the frame if necessary
+    for widget in frame.findChildren(QWidget):
+        widget.deleteLater()
 
     columns = list(df.columns)
+    num_rows = df.shape[0]
 
-    tree = ttk.Treeview(data_frame, columns=columns, show='headings')
-    for col in df.columns:
-        tree.heading(col, text=col)
-    for _, rows in df.iterrows():
-        tree.insert("", "end", values=list(rows))
+    # Create a QTableWidget
+    table = QTableWidget(frame)
+    table.setRowCount(num_rows)
+    table.setColumnCount(len(columns))
+    table.setHorizontalHeaderLabels(columns)
 
-    tree.pack()
+    # Insert DataFrame values into the table
+    for i in range(num_rows):
+        for j in range(len(columns)):
+            table.setItem(i, j, QTableWidgetItem(str(df.iloc[i, j])))
 
-    horizontal_scrollbar = Scrollbar(data_frame, orient=HORIZONTAL, command=tree.xview)
-    tree.configure(xscrollcommand=horizontal_scrollbar.set)
-    horizontal_scrollbar.pack(anchor='s', fill=tk.X, expand=True)
+    # Set stretch and scrollbar
+    table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+    scroll_bar = QScrollBar()
+    table.setHorizontalScrollBar(scroll_bar)
 
+    layout = QVBoxLayout(frame)
+    layout.addWidget(table)
 
+    frame.setLayout(layout)

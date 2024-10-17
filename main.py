@@ -81,6 +81,12 @@ class UI(QMainWindow):
         self.pie_instance = self.pl.Pie(self.dashboard)
         self.scatter_instance = self.pl.Scatter(self.dashboard)
 
+        dashboard_layout.addWidget(self.plot_instance.get_frame())
+        dashboard_layout.addWidget(self.hist_instance.get_frame())
+        dashboard_layout.addWidget(self.scatter_instance.get_frame())
+        dashboard_layout.addWidget(self.bar_instance.get_frame())
+        dashboard_layout.addWidget(self.pie_instance.get_frame())
+
         self.erase_frame()
 
     def erase_frame(self):

@@ -1,17 +1,26 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QVBoxLayout, QHBoxLayout, QPushButton, QFrame, QWidget, QGridLayout, QMainWindow
+from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QVBoxLayout, QHBoxLayout, QPushButton, QFrame, QWidget, \
+    QGridLayout, QMainWindow, QSizePolicy
 
 x = None
 y = None
 _title = None
 
+
+
 def title(frame):
+    optional_label = QLabel("Optional", frame)
+    optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
+    frame.layout().addWidget(optional_label, 5, 0)
+
     global _title
     title_label = QLabel("Title:", frame)
     title_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
     frame.layout().addWidget(title_label, 6, 0)
 
     _title = QLineEdit(frame)
+    _title.setFixedSize(100,30)
+    _title.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
     frame.layout().addWidget(_title, 6, 2)
 
 def required_part(frame, type_):
@@ -21,12 +30,16 @@ def required_part(frame, type_):
     required_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
     frame.layout().addWidget(required_label, 2, 0)
 
+
+
     if type_ != "bar":
         x_label = QLabel("X-axis:", frame)
         x_label.setStyleSheet("font-size: 10px; font-weight: bold; background-color: cyan;")
         frame.layout().addWidget(x_label, 3, 0)
 
         x = QLineEdit(frame)
+        x.setFixedSize(100,30)
+        x.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         frame.layout().addWidget(x, 3, 2)
 
     if type_ != "hist" and type_ != "bar":
@@ -35,6 +48,8 @@ def required_part(frame, type_):
         frame.layout().addWidget(y_label, 4, 0)
 
         y = QLineEdit(frame)
+        y.setFixedSize(100, 30)
+        y.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         frame.layout().addWidget(y, 4, 2)
 
 class Plot:
@@ -47,10 +62,6 @@ class Plot:
 
         required_part(self.plot_frame, "plot")
 
-        self.optional_label = QLabel("Optional", self.plot_frame)
-        self.optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
-        layout.addWidget(self.optional_label, 5, 0)
-
         title(self.plot_frame)
 
         self.x_label_label = QLabel("xlabel:", self.plot_frame)
@@ -58,6 +69,8 @@ class Plot:
         layout.addWidget(self.x_label_label, 7, 0)
 
         self.x_label = QLineEdit(self.plot_frame)
+        self.x_label.setFixedSize(100, 30)
+        self.x_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.x_label, 7, 2)
 
         self.y_label_label = QLabel("ylabel:", self.plot_frame)
@@ -65,10 +78,18 @@ class Plot:
         layout.addWidget(self.y_label_label, 8, 0)
 
         self.y_label = QLineEdit(self.plot_frame)
+        self.y_label.setFixedSize(100, 30)
+        self.y_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.y_label, 8, 2)
 
         self.submit = QPushButton("Submit", self.plot_frame)
+        self.submit.setFixedSize(100, 30)
+        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.submit, 9, 9)
+
+    def get_frame(self):
+        return self.plot_frame
+
 
 class Hist:
     def __init__(self, window):
@@ -80,10 +101,6 @@ class Hist:
 
         required_part(self.hist_frame, "hist")
 
-        self.optional_label = QLabel("Optional", self.hist_frame)
-        self.optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
-        layout.addWidget(self.optional_label, 5, 0)
-
         title(self.hist_frame)
 
         self.x_label_label = QLabel("xlabel:", self.hist_frame)
@@ -91,6 +108,8 @@ class Hist:
         layout.addWidget(self.x_label_label, 7, 0)
 
         self.x_label = QLineEdit(self.hist_frame)
+        self.x_label.setFixedSize(100, 30)
+        self.x_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.x_label, 7, 2)
 
         self.y_label_label = QLabel("ylabel:", self.hist_frame)
@@ -98,10 +117,17 @@ class Hist:
         layout.addWidget(self.y_label_label, 8, 0)
 
         self.y_label = QLineEdit(self.hist_frame)
+        self.y_label.setFixedSize(100, 30)
+        self.y_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.y_label, 8, 2)
 
         self.submit = QPushButton("Submit", self.hist_frame)
+        self.submit.setFixedSize(100, 30)
+        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.submit, 9, 9)
+
+    def get_frame(self):
+        return self.hist_frame
 
 class Scatter:
     def __init__(self, window):
@@ -113,10 +139,6 @@ class Scatter:
 
         required_part(self.scatter_frame, "scatter")
 
-        self.optional_label = QLabel("Optional", self.scatter_frame)
-        self.optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
-        layout.addWidget(self.optional_label, 5, 0)
-
         title(self.scatter_frame)
 
         self.x_label_label = QLabel("xlabel:", self.scatter_frame)
@@ -124,6 +146,8 @@ class Scatter:
         layout.addWidget(self.x_label_label, 7, 0)
 
         self.x_label = QLineEdit(self.scatter_frame)
+        self.x_label.setFixedSize(100, 30)
+        self.x_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.x_label, 7, 2)
 
         self.y_label_label = QLabel("ylabel:", self.scatter_frame)
@@ -131,10 +155,17 @@ class Scatter:
         layout.addWidget(self.y_label_label, 8, 0)
 
         self.y_label = QLineEdit(self.scatter_frame)
+        self.y_label.setFixedSize(100, 30)
+        self.y_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.y_label, 8, 2)
 
         self.submit = QPushButton("Submit", self.scatter_frame)
+        self.submit.setFixedSize(100, 30)
+        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.submit, 9, 9)
+
+    def get_frame(self):
+        return self.scatter_frame
 
 class Bar:
     def __init__(self, window):
@@ -151,6 +182,8 @@ class Bar:
         layout.addWidget(self.values_label, 3, 0)
 
         self.values = QLineEdit(self.bar_frame)
+        self.values.setFixedSize(100, 30)
+        self.values.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.values, 3, 2)
 
         self.category_label = QLabel("Categories:", self.bar_frame)
@@ -158,16 +191,19 @@ class Bar:
         layout.addWidget(self.category_label, 4, 0)
 
         self.category = QLineEdit(self.bar_frame)
+        self.category.setFixedSize(100, 30)
+        self.category.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.category, 4, 3)
-
-        self.optional_label = QLabel("Optional", self.bar_frame)
-        self.optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
-        layout.addWidget(self.optional_label, 5, 0)
 
         title(self.bar_frame)
 
         self.submit = QPushButton("Submit", self.bar_frame)
+        self.submit.setFixedSize(100, 30)
+        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.submit, 7, 9)
+
+    def get_frame(self):
+        return self.bar_frame
 
 class Pie:
     def __init__(self, window):
@@ -179,11 +215,12 @@ class Pie:
 
         required_part(self.pie_frame, "pie")
 
-        self.optional_label = QLabel("Optional", self.pie_frame)
-        self.optional_label.setStyleSheet("font-size: 30px; font-style: italic; background-color: cyan;")
-        layout.addWidget(self.optional_label, 5, 0)
-
         title(self.pie_frame)
 
         self.submit = QPushButton("Submit", self.pie_frame)
+        self.submit.setFixedSize(100, 30)
+        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.submit, 7, 9)
+
+    def get_frame(self):
+        return self.pie_frame

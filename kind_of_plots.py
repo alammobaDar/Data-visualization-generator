@@ -56,7 +56,7 @@ class Plot:
     def __init__(self, window):
         self.window = window
         self.plot_frame = QFrame(self.window)
-        self.plot_frame.setStyleSheet("background-color: cyan; height: 400px;")
+        self.plot_frame.setStyleSheet("background-color: cyan; padding: 0px; margin: 0px")
         layout = QGridLayout(self.plot_frame)
         self.plot_frame.setLayout(layout)
 
@@ -95,7 +95,7 @@ class Hist:
     def __init__(self, window):
         self.window = window
         self.hist_frame = QFrame(self.window)
-        self.hist_frame.setStyleSheet("background-color: cyan; height: 400px;")
+        self.hist_frame.setStyleSheet("background-color: blue; padding: 0px; margin: 0px")
         layout = QGridLayout(self.hist_frame)
         self.hist_frame.setLayout(layout)
 
@@ -133,7 +133,7 @@ class Scatter:
     def __init__(self, window):
         self.window = window
         self.scatter_frame = QFrame(self.window)
-        self.scatter_frame.setStyleSheet("background-color: cyan; height: 400px;")
+        self.scatter_frame.setStyleSheet("background-color: cyan; padding: 0px; margin: 0px")
         layout = QGridLayout(self.scatter_frame)
         self.scatter_frame.setLayout(layout)
 
@@ -171,7 +171,7 @@ class Bar:
     def __init__(self, window):
         self.window = window
         self.bar_frame = QFrame(self.window)
-        self.bar_frame.setStyleSheet("background-color: cyan; height: 400px;")
+        self.bar_frame.setStyleSheet("background-color: cyan; padding: 0px; margin: 0px")
         layout = QGridLayout(self.bar_frame)
         self.bar_frame.setLayout(layout)
 
@@ -209,7 +209,7 @@ class Pie:
     def __init__(self, window):
         self.window = window
         self.pie_frame = QFrame(self.window)
-        self.pie_frame.setStyleSheet("background-color: cyan; height: 400px;")
+        self.pie_frame.setStyleSheet("background-color: cyan; padding: 0px; margin: 0px")
         layout = QGridLayout(self.pie_frame)
         self.pie_frame.setLayout(layout)
 

@@ -4,8 +4,9 @@ from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBo
 from PyQt5.QtCore import Qt
 
 import kind_of_plots
+from Table import Table
 from kind_of_plots import x, y, _title
-from Table import upload, show_df
+from Table import Table
 from graphs import create_plot
 
 class UI(QMainWindow):
@@ -39,14 +40,14 @@ class UI(QMainWindow):
         self.dashboard = QFrame(self)
         self.dashboard.setStyleSheet("background-color: cyan;")
         self.dashboard.setFixedWidth(450)
-        dashboard_layout = QGridLayout(self.dashboard)
+        dashboard_layout = QVBoxLayout(self.dashboard)
         content_layout.addWidget(self.dashboard)
 
         # Main section (right panel)
         self.main_section = QFrame(self)
         self.main_section.setStyleSheet("background-color: red;")
         content_layout.addWidget(self.main_section)
-        main_section_layout = QVBoxLayout(self.main_section)
+        self.main_section_layout = QVBoxLayout(self.main_section)
 
         # Upload Frame
         self.upload_frame = QFrame(self.main_section)
@@ -57,12 +58,12 @@ class UI(QMainWindow):
 
         upload_layout.addWidget(self.upload_label, alignment=Qt.AlignCenter)
         upload_layout.addWidget(self.upload_button, alignment=Qt.AlignCenter)
-        main_section_layout.addWidget(self.upload_frame, alignment=Qt.AlignCenter)
+        self.main_section_layout.addWidget(self.upload_frame, alignment=Qt.AlignCenter)
 
         # ComboBox for selecting plot type
-
-        self.combo_box_frame = QFrame(self.dashboard)
+        self.combo_box_frame = QFrame()
         combo_box_frame_layout = QVBoxLayout(self.combo_box_frame)
+        self.combo_box_frame.setStyleSheet("background-color: pink; padding: 0px; margin: 0px")
         self.select_label = QLabel("Please choose what kind of plot you want to use", self)
         self.selected_plot = QComboBox(self)
         self.selected_plot.addItems(["Plot", "Hist", "Scatter", "Bar", "Pie"])
@@ -71,24 +72,40 @@ class UI(QMainWindow):
 
         combo_box_frame_layout.addWidget(self.select_label, alignment=Qt.AlignCenter | Qt.AlignTop)
         combo_box_frame_layout.addWidget(self.selected_plot, alignment=Qt.AlignCenter | Qt.AlignTop)
-        dashboard_layout.addWidget(self.combo_box_frame, 0, 0, 1, 10, alignment=Qt.AlignCenter | Qt.AlignTop)
+
+        # creating a container for the kind_of_plots to be placed
+        self.plots_frame = QFrame()
+        plots_frame_layout = QVBoxLayout(self.plots_frame)
+        self.plots_frame.setStyleSheet("background-color: green; padding: 0px; margin: 0px")
 
         # Creating instances of plots
         self.pl = kind_of_plots
-        self.plot_instance = self.pl.Plot(self.dashboard)
-        self.hist_instance = self.pl.Hist(self.dashboard)
-        self.bar_instance = self.pl.Bar(self.dashboard)
-        self.pie_instance = self.pl.Pie(self.dashboard)
-        self.scatter_instance = self.pl.Scatter(self.dashboard)
+        self.plot_instance = self.pl.Plot(self.plots_frame)
+        self.hist_instance = self.pl.Hist(self.plots_frame)
+        self.bar_instance = self.pl.Bar(self.plots_frame)
+        self.pie_instance = self.pl.Pie(self.plots_frame)
+        self.scatter_instance = self.pl.Scatter(self.plots_frame)
 
-        dashboard_layout.addWidget(self.plot_instance.get_frame())
-        dashboard_layout.addWidget(self.hist_instance.get_frame())
-        dashboard_layout.addWidget(self.scatter_instance.get_frame())
-        dashboard_layout.addWidget(self.bar_instance.get_frame())
-        dashboard_layout.addWidget(self.pie_instance.get_frame())
+        plots_frame_layout.addWidget(self.plot_instance.get_frame(), alignment=Qt.AlignTop)
+        plots_frame_layout.addWidget(self.hist_instance.get_frame(),  alignment=Qt.AlignTop)
+        plots_frame_layout.addWidget(self.scatter_instance.get_frame(), alignment=Qt.AlignTop)
+        plots_frame_layout.addWidget(self.bar_instance.get_frame(), alignment=Qt.AlignTop)
+        plots_frame_layout.addWidget(self.pie_instance.get_frame(), alignment=Qt.AlignTop)
 
         self.erase_frame()
 
+
+
+        # Add plots frame to the layout
+        dashboard_layout.addWidget(self.plots_frame)
+        dashboard_layout.addWidget(self.combo_box_frame, alignment=Qt.AlignTop)
+
+        # Set stretch factors
+        dashboard_layout.setStretch(0, 0)  # Combo box frame takes up 1 part
+        dashboard_layout.setStretch(1, 2)  # Plots frame takes up 2 parts
+
+        #instantiate the table class
+        self.tb = Table()
     def erase_frame(self):
         # Clear plot frames when switching between plot types
         self.plot_instance.plot_frame.setVisible(False)
@@ -114,10 +131,11 @@ class UI(QMainWindow):
             self.pie_instance.pie_frame.setVisible(True)
 
     def load_and_display_data(self):
-        df = upload()
+        df = self.tb.upload()
         if df is not None:
             self.upload_frame.setVisible(False)
-            show_df(df, self.main_section)
+            self.tb.show_df(df)
+            self.main_section_layout.addWidget(self.tb.get_frame(), alignment=Qt.AlignTop | Qt.AlignCenter)
 
     def display_plot(self):
         create_plot(x, y)

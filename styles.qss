@@ -1,0 +1,45 @@
+#central_widget{
+    background-color: 2f2f2f;
+}
+
+#title_bar {
+   background-color: #171717;
+}
+
+#_title{
+   font-family: 'Poppins';
+   font-size: 35px;
+   font-weight: bold;
+   color: white;
+   background-color: #171717;
+}
+
+#dashboard{
+    background-color: #171717;
+}
+
+#main_section{
+    background-color: #313131;
+}
+
+#combo_box_frame{
+    background-color: #313131;
+    border-radius: 15px;
+}
+
+.font_color{
+    color: white;
+    font-family: 'Poppins';
+    font-size: 14px;
+    font-weight: bold;
+}
+
+#selected_plot{
+    font-family: 'Poppins';
+    font-size: 15px;
+    text-align: center;
+    background-color: #212121;
+    color: white;
+    width: 100px;
+    height: 30px;
+}

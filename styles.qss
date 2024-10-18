@@ -1,5 +1,5 @@
 #central_widget{
-    background-color: 2f2f2f;
+    background-color: #313131;
 }
 
 #title_bar {
@@ -33,6 +33,46 @@
     font-size: 14px;
     font-weight: bold;
 }
+
+QTableWidget {
+    background-color: #ececec;
+}
+
+QHeaderView::section {
+    background-color: #ececec;
+    color: black;
+    font-weight: bold;
+    font-family: 'Poppins';
+}
+
+QTableWidget::item {
+    background-color: #313131;
+    color: white;
+    font-family: 'Poppins';
+}
+
+QScrollBar:vertical {
+    border-radius: 15px;
+    width: 25px;
+}
+
+QScrollBar:horizontal {
+    border-radius: 15px;
+    height: 25px;
+}
+
+QScrollBar::handle:vertical {
+    background: #aaaaaa;
+    border-radius: 15px;
+    width: 10px;
+}
+QScrollBar::handle:horizontal {
+    background: #9a9a9a;
+    border-radius: 15px;
+    height: 10px;
+}
+
+
 
 #selected_plot{
     font-family: 'Poppins';

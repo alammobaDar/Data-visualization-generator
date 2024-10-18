@@ -1,6 +1,7 @@
 import sys
 
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QPalette
 from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QMainWindow, QFileDialog, \
     QFrame, QScrollBar, QTableWidget, QTableWidgetItem, QWidget, QHeaderView, QAbstractScrollArea, QScrollArea
 import pandas as pd
@@ -44,6 +45,7 @@ class Table:
         self.table.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.table.setFixedHeight(300)
         self.table.setFixedWidth(750)
+        self.table.setObjectName("table")
     
         # Insert DataFrame values into the table
         for i in range(num_rows):

@@ -16,11 +16,11 @@ class UI(QMainWindow):
         super().__init__()
 
 
-        # Create drop shadow effect
-        shadow = QGraphicsDropShadowEffect()
-        shadow.setBlurRadius(10)
-        shadow.setOffset(3, 3)
-        shadow.setColor(QColor(0, 0, 0, 150))
+        # Create drop self.shadow effect
+        self.shadow = QGraphicsDropShadowEffect()
+        self.shadow.setBlurRadius(10)
+        self.shadow.setOffset(3, 3)
+        self.shadow.setColor(QColor(0, 0, 0, 150))
 
         # Load some fonts
         QFontDatabase.addApplicationFont(".Poppins/Poppins-Regular.ttf")
@@ -34,7 +34,7 @@ class UI(QMainWindow):
         # Main widget to hold all layouts and widgets
         central_widget = QWidget(self)
         self.setCentralWidget(central_widget)
-
+        central_widget.setObjectName("central_widget")
         main_layout = QVBoxLayout(central_widget)
 
         # Title bar section
@@ -69,6 +69,7 @@ class UI(QMainWindow):
         self.upload_frame = QFrame(self.main_section)
         upload_layout = QVBoxLayout(self.upload_frame)
         self.upload_label = QLabel("Please upload your Excel file or CSV file", self)
+        self.upload_label.setProperty("class", "font_color")
         self.upload_button = QPushButton("Upload", self)
         self.upload_button.clicked.connect(self.load_and_display_data)
 
@@ -80,7 +81,7 @@ class UI(QMainWindow):
         self.combo_box_frame = QFrame()
         combo_box_frame_layout = QVBoxLayout(self.combo_box_frame)
         self.combo_box_frame.setObjectName("combo_box_frame")
-        self.combo_box_frame.setGraphicsEffect(shadow)
+        self.combo_box_frame.setGraphicsEffect(self.shadow)
 
         self.select_label = QLabel("Please choose what kind of plot you want to use", self)
         self.select_label.setProperty("class", "font_color")
@@ -89,7 +90,7 @@ class UI(QMainWindow):
         self.selected_plot.addItems(["Plot", "Hist", "Scatter", "Bar", "Pie"])
         self.selected_plot.currentIndexChanged.connect(self.on_combo_box)
         self.selected_plot.setObjectName("selected_plot")
-        self.selected_plot.setGraphicsEffect(shadow)
+        self.selected_plot.setGraphicsEffect(self.shadow)
 
 
         combo_box_frame_layout.addWidget(self.select_label, alignment=Qt.AlignCenter | Qt.AlignTop)
@@ -167,6 +168,7 @@ class UI(QMainWindow):
             self.upload_frame.setVisible(False)
             self.tb.show_df(df)
             self.main_section_layout.addWidget(self.tb.get_frame(), alignment=Qt.AlignTop | Qt.AlignCenter)
+            self.tb.get_frame().setGraphicsEffect(self.shadow)
 
     def display_plot(self):
         create_plot(x, y)

@@ -1,6 +1,8 @@
 import sys
+
+from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QMainWindow, QFileDialog, \
-    QFrame, QScrollBar, QTableWidget, QTableWidgetItem, QWidget, QHeaderView, QAbstractScrollArea
+    QFrame, QScrollBar, QTableWidget, QTableWidgetItem, QWidget, QHeaderView, QAbstractScrollArea, QScrollArea
 import pandas as pd
 
 class Table:
@@ -34,7 +36,6 @@ class Table:
         self.tableFrame.setContentsMargins(0,0,0,0)
 
 
-
         # Create a QTableWidget
         self.table = QTableWidget(self.tableFrame)
         self.table.setRowCount(num_rows)
@@ -50,9 +51,8 @@ class Table:
                 self.table.setItem(i, j, QTableWidgetItem(str(df.iloc[i, j])))
     
         # Set stretch and scrollbar
-        self.table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
-        scroll_bar = QScrollBar()
-        self.table.setHorizontalScrollBar(scroll_bar)
+        self.table.setVerticalScrollBarPolicy(Qt.ScrollBarAsNeeded)
+        self.table.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
 
         table_layout.addWidget(self.table)
 

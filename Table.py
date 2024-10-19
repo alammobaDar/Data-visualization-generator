@@ -58,9 +58,17 @@ class Table:
 
         table_layout.addWidget(self.table)
 
-    def get_value(self, x, y):
-            print(self.df[x])
-            print(self.df[y])
+    def get_value(self, x, kind, y=""):
+        try:
+            if kind == "Hist":
+                print(self.df[x])
+                print(kind)
+            else:
+                print(self.df[x])
+                print(self.df[y])
+                print(kind)
+        except KeyError:
+            print("there's no such column")
 
 
     def get_frame(self):

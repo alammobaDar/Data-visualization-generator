@@ -128,6 +128,13 @@ class Hist(All_Plots):
         self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.submit, 9, 9)
 
+        self.x.textEdited.connect(self.text_changed)
+        self._title.textEdited.connect(self.text_changed)
+
+    def text_changed(self):
+        self.x_value = self.x.text()
+        self.title_value = self._title.text()
+
     def get_frame(self):
         return self.hist_frame
 
@@ -160,6 +167,15 @@ class Scatter(All_Plots):
         self.submit = QPushButton("Submit", self.scatter_frame)
         self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.submit, 9, 9)
+
+        self.x.textEdited.connect(self.text_changed)
+        self.y.textEdited.connect(self.text_changed)
+        self._title.textEdited.connect(self.text_changed)
+
+    def text_changed(self):
+        self.x_value = self.x.text()
+        self.y_value = self.y.text()
+        self.title_value = self._title.text()
 
     def get_frame(self):
         return self.scatter_frame
@@ -196,6 +212,15 @@ class Bar(All_Plots):
         self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.submit, 7, 9)
 
+        self.values.textEdited.connect(self.text_changed)
+        self.category.textEdited.connect(self.text_changed)
+        self._title.textEdited.connect(self.text_changed)
+
+    def text_changed(self):
+        self.values_value = self.values.text()
+        self.category_value = self.category.text()
+        self.title_value = self._title.text()
+
     def get_frame(self):
         return self.bar_frame
 
@@ -213,6 +238,15 @@ class Pie(All_Plots):
         self.submit = QPushButton("Submit", self.pie_frame)
         self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.submit, 7, 9)
+
+        self.x.textEdited.connect(self.text_changed)
+        self.y.textEdited.connect(self.text_changed)
+        self._title.textEdited.connect(self.text_changed)
+
+    def text_changed(self):
+        self.x_value = self.x.text()
+        self.y_value = self.y.text()
+        self.title_value = self._title.text()
 
     def get_frame(self):
         return self.pie_frame

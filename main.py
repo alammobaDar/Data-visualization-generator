@@ -86,7 +86,7 @@ class UI(QMainWindow):
         self.select_label.setProperty("class", "font_color")
 
         self.selected_plot = QComboBox(self)
-        self.selected_plot.addItems(["Plot", "Hist", "Scatter", "Bar", "Pie"])
+        self.selected_plot.addItems(["Default", "Plot", "Hist", "Scatter", "Bar", "Pie"])
         self.selected_plot.currentIndexChanged.connect(self.on_combo_box)
         self.selected_plot.setObjectName("selected_plot")
         self.selected_plot.setGraphicsEffect(self.shadow)
@@ -139,6 +139,11 @@ class UI(QMainWindow):
 
         #load the plot button
         self.plot_instance.submit.clicked.connect(self.submit_entry)
+        self.hist_instance.submit.clicked.connect(self.submit_entry)
+        self.scatter_instance.submit.clicked.connect(self.submit_entry)
+        self.bar_instance.submit.clicked.connect(self.submit_entry)
+        self.pie_instance.submit.clicked.connect(self.submit_entry)
+
 
     def load_stylesheet(self):
         file = QFile("styles.qss")
@@ -146,11 +151,23 @@ class UI(QMainWindow):
             stream = QTextStream(file)
             self.setStyleSheet(stream.readAll())
 
-
-
     def submit_entry(self):
-        pl = self.plot_instance
-        self.tb.get_value(pl.x_value, pl.y_value)
+
+        if self.selected_value == "Plot":
+            pl = self.plot_instance
+            self.tb.get_value(x = pl.x_value, y = pl.y_value, kind = self.selected_value)
+        elif self.selected_value == "Hist":
+            hs = self.hist_instance
+            self.tb.get_value(x = hs.x_value, kind = self.selected_value)
+        elif self.selected_value == "Scatter":
+            sc = self.scatter_instance
+            self.tb.get_value(x=sc.x_value, y=sc.y_value, kind=self.selected_value)
+        elif self.selected_value == "Bar":
+            br = self.bar_instance
+            self.tb.get_value(x=br.values_value, y=br.category_value, kind=self.selected_value)
+        elif self.selected_value == "Pie":
+            pi = self.pie_instance
+            self.tb.get_value(x=pi.x_value, y=pi.y_value, kind=self.selected_value)
 
     def erase_frame(self):
         # Clear plot frames when switching between plot types
@@ -161,19 +178,19 @@ class UI(QMainWindow):
         self.pie_instance.pie_frame.setVisible(False)
 
     def on_combo_box(self):
-        selected_value = self.selected_plot.currentText()
+        self.selected_value = self.selected_plot.currentText()
         self.erase_frame()
 
         # Show the selected plot's frame
-        if selected_value == "Plot":
+        if self.selected_value == "Plot":
             self.plot_instance.plot_frame.setVisible(True)
-        elif selected_value == "Hist":
+        elif self.selected_value == "Hist":
             self.hist_instance.hist_frame.setVisible(True)
-        elif selected_value == "Scatter":
+        elif self.selected_value == "Scatter":
             self.scatter_instance.scatter_frame.setVisible(True)
-        elif selected_value == "Bar":
+        elif self.selected_value == "Bar":
             self.bar_instance.bar_frame.setVisible(True)
-        elif selected_value == "Pie":
+        elif self.selected_value == "Pie":
             self.pie_instance.pie_frame.setVisible(True)
 
     def load_and_display_data(self):

@@ -44,7 +44,7 @@ class UI(QMainWindow):
         title_layout = QVBoxLayout(self.title_bar)
         self._title = QLabel("Data Visualization Tool", self)
         self._title.setAlignment(Qt.AlignCenter)
-        self._title.setObjectName("_title")
+        self._title.setProperty("class", "title")
         title_layout.addWidget(self._title)
         main_layout.addWidget(self.title_bar)
 
@@ -80,7 +80,7 @@ class UI(QMainWindow):
         # ComboBox for selecting plot type
         self.combo_box_frame = QFrame()
         combo_box_frame_layout = QVBoxLayout(self.combo_box_frame)
-        self.combo_box_frame.setObjectName("combo_box_frame")
+        self.combo_box_frame.setProperty("class", "frame")
         self.combo_box_frame.setGraphicsEffect(self.shadow)
 
         self.select_label = QLabel("Please choose what kind of plot you want to use", self)
@@ -115,7 +115,14 @@ class UI(QMainWindow):
         plots_frame_layout.addWidget(self.bar_instance.get_frame(), alignment=Qt.AlignTop)
         plots_frame_layout.addWidget(self.pie_instance.get_frame(), alignment=Qt.AlignTop)
 
+        self.plot_instance.get_frame().setGraphicsEffect(self.shadow)
+        self.hist_instance.get_frame().setGraphicsEffect(self.shadow)
+        self.scatter_instance.get_frame().setGraphicsEffect(self.shadow)
+        self.bar_instance.get_frame().setGraphicsEffect(self.shadow)
+        self.pie_instance.get_frame().setGraphicsEffect(self.shadow)
+
         self.erase_frame()
+
 
         # Add plots frame to the layout
         dashboard_layout.addWidget(self.plots_frame)

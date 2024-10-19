@@ -1,7 +1,7 @@
 import sys
 
-from PyQt5.QtCore import Qt
-from PyQt5.QtGui import QPalette
+from PyQt5.QtCore import Qt, QFile, QTextStream
+from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QMainWindow, QFileDialog, \
     QFrame, QScrollBar, QTableWidget, QTableWidgetItem, QWidget, QHeaderView, QAbstractScrollArea, QScrollArea
 import pandas as pd
@@ -57,6 +57,7 @@ class Table:
         self.table.setHorizontalScrollBarPolicy(Qt.ScrollBarAsNeeded)
 
         table_layout.addWidget(self.table)
+
 
 
     def get_frame(self):

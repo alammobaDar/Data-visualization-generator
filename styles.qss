@@ -6,12 +6,11 @@
    background-color: #171717;
 }
 
-#_title{
+.title{
    font-family: 'Poppins';
    font-size: 35px;
    font-weight: bold;
    color: white;
-   background-color: #171717;
 }
 
 #dashboard{
@@ -22,7 +21,7 @@
     background-color: #313131;
 }
 
-#combo_box_frame{
+.frame{
     background-color: #313131;
     border-radius: 15px;
 }
@@ -32,6 +31,31 @@
     font-family: 'Poppins';
     font-size: 14px;
     font-weight: bold;
+}
+
+QLineEdit{
+    background-color: #676767;
+    border-radius: 5px;
+    border: 1px solid black;
+    color: white;
+    width: 150;
+}
+
+QPushButton{
+    width: 100px;
+    height: 35px;
+    background-color: #676767;
+    color: white;
+    border-radius: 5px;
+    border-style: outset;
+    font-family: 'Poppins';
+    font-size: 12px;
+    font-weight: bold;
+}
+
+QPushButton:pressed {
+    background-color: #575757;
+    border-style: inset;
 }
 
 QTableWidget {
@@ -52,27 +76,24 @@ QTableWidget::item {
 }
 
 QScrollBar:vertical {
-    border-radius: 15px;
-    width: 25px;
+    width: 20px;
 }
 
 QScrollBar:horizontal {
-    border-radius: 15px;
-    height: 25px;
+    height: 20px;
 }
 
 QScrollBar::handle:vertical {
-    background: #aaaaaa;
+    background-color: #9a9a9a;
     border-radius: 15px;
-    width: 10px;
+    min-width: 5px;
 }
+
 QScrollBar::handle:horizontal {
-    background: #9a9a9a;
+    background-color: #9a9a9a;
     border-radius: 15px;
-    height: 10px;
+    min-height: 5px;
 }
-
-
 
 #selected_plot{
     font-family: 'Poppins';

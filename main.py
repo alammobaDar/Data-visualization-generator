@@ -7,9 +7,8 @@ from PyQt5.QtCore import Qt, QFile, QTextStream
 
 import kind_of_plots
 from Table import Table
-from kind_of_plots import x, y, _title
 from Table import Table
-from graphs import create_plot
+
 
 class UI(QMainWindow):
     def __init__(self):
@@ -138,12 +137,20 @@ class UI(QMainWindow):
         #load the stylesheet
         self.load_stylesheet()
 
+        #load the plot button
+        self.plot_instance.submit.clicked.connect(self.submit_entry)
+
     def load_stylesheet(self):
         file = QFile("styles.qss")
         if file.open(QFile.ReadOnly | QFile.Text):
             stream = QTextStream(file)
             self.setStyleSheet(stream.readAll())
 
+
+
+    def submit_entry(self):
+        pl = self.plot_instance
+        self.tb.get_value(pl.x_value, pl.y_value)
 
     def erase_frame(self):
         # Clear plot frames when switching between plot types
@@ -177,8 +184,7 @@ class UI(QMainWindow):
             self.main_section_layout.addWidget(self.tb.get_frame(), alignment=Qt.AlignTop | Qt.AlignCenter)
             self.tb.get_frame().setGraphicsEffect(self.shadow)
 
-    def display_plot(self):
-        create_plot(x, y)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

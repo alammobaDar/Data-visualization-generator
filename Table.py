@@ -17,19 +17,19 @@ class Table:
         self.file_name, _ = QFileDialog.getOpenFileName(None, "Open file", "",
                                                    "CSV files (*.csv);;Excel files (*.xlsx, *.xls)")
     
-        df = None
+        self.df = None
         if self.file_name:
             if self.file_name.endswith(".xlsx") or self.file_name.endswith(".xls"):
-                df = pd.read_excel(self.file_name)
+                self.df = pd.read_excel(self.file_name)
             elif self.file_name.endswith(".csv"):
-                df = pd.read_csv(self.file_name)
+                self.df = pd.read_csv(self.file_name)
     
-        return df
+        return self.df
     
     
     def show_df(self, df):
     
-        columns = list(df.columns)
+        self.columns = list(df.columns)
         num_rows = df.shape[0]
 
         self.tableFrame = QFrame()
@@ -40,8 +40,8 @@ class Table:
         # Create a QTableWidget
         self.table = QTableWidget(self.tableFrame)
         self.table.setRowCount(num_rows)
-        self.table.setColumnCount(len(columns))
-        self.table.setHorizontalHeaderLabels(columns)
+        self.table.setColumnCount(len(self.columns))
+        self.table.setHorizontalHeaderLabels(self.columns)
         self.table.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         self.table.setFixedHeight(300)
         self.table.setFixedWidth(750)
@@ -49,7 +49,7 @@ class Table:
     
         # Insert DataFrame values into the table
         for i in range(num_rows):
-            for j in range(len(columns)):
+            for j in range(len(self.columns)):
                 self.table.setItem(i, j, QTableWidgetItem(str(df.iloc[i, j])))
     
         # Set stretch and scrollbar
@@ -58,6 +58,9 @@ class Table:
 
         table_layout.addWidget(self.table)
 
+    def get_value(self, x, y):
+            print(self.df[x])
+            print(self.df[y])
 
 
     def get_frame(self):

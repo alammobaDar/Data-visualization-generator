@@ -2,8 +2,6 @@ import sys
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QVBoxLayout, QHBoxLayout, QPushButton, QFrame, QWidget, \
     QGridLayout, QMainWindow, QSizePolicy
 
-from graphs import create_plot
-from Table import Table
 
 class All_Plots:
 

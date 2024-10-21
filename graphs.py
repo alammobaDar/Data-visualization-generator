@@ -12,15 +12,18 @@ class Matplotlib:
         self.canvas = FigureCanvas(self.figure)
         self.toolbar = NavigationToolbar(self.canvas, self.frame)
 
+        frame.layout().addWidget(self.toolbar)
+        frame.layout().addWidget(self.canvas)
+
     def create_plot(self, x, title, kind, y=""):
         if kind == "Plot":
             self.figure.clear()
-            plt.figure()
-            plt.plot(x, y)
-            plt.title(title)
-            plt.xticks(rotation=90)
-            plt.grid(True)
-            plt.show()
+            ax = self.figure.add_subplot(111)
+            ax.plot(x, y)
+            ax.set_title(title)
+            ax.tick_params(axis='x', rotation=90)
+            ax.grid(True)
+            self.canvas.draw()
 
         elif kind == "Hist":
             plt.figure()
@@ -56,5 +59,9 @@ class Matplotlib:
             plt.axis('equal')  # Equal aspect ratio ensures the pie is drawn as a circle.
             plt.show()
 
+    def get_figure(self):
+        return self.canvas
 
+    def get_toolbar(self):
+        return self.toolbar
 

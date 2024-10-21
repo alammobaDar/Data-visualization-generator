@@ -28,7 +28,7 @@ class UI(QMainWindow):
 
         #Setting up the main window
         self.setWindowTitle("Matplotlib Generator")
-        self.setGeometry(100, 100, 1200, 800)
+        self.setGeometry(100, 100, 1500, 900)
 
         # Main widget to hold all layouts and widgets
         central_widget = QWidget(self)
@@ -152,6 +152,7 @@ class UI(QMainWindow):
             self.setStyleSheet(stream.readAll())
 
     def submit_entry(self):
+
 
         if self.selected_value == "Plot":
             pl = self.plot_instance

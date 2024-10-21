@@ -12,56 +12,48 @@ class Matplotlib:
         self.canvas = FigureCanvas(self.figure)
         self.toolbar = NavigationToolbar(self.canvas, self.frame)
 
+
+
         frame.layout().addWidget(self.toolbar)
         frame.layout().addWidget(self.canvas)
 
     def create_plot(self, x, title, kind, y=""):
+        self.figure.clear()
+        self.ax = self.figure.add_subplot(111)
+
         if kind == "Plot":
             self.figure.clear()
-            ax = self.figure.add_subplot(111)
-            ax.plot(x, y)
-            ax.set_title(title)
-            ax.tick_params(axis='x', rotation=90)
-            ax.grid(True)
-            self.canvas.draw()
+            self.ax.plot(x, y)
+            self.ax.set_title(title)
+            self.ax.tick_params(axis='x', rotation=90)
+            self.ax.grid(True)
+
 
         elif kind == "Hist":
-            plt.figure()
-            plt.hist(x, bins=5, color='skyblue', edgecolor='black')
-            plt.title('Histogram')
-            plt.xlabel('Values')
-            plt.ylabel('Frequency')
-            plt.xticks(rotation=90)
-            plt.show()
+            self.ax.hist(x, bins=5, color='skyblue', edgecolor='black')
+            self.ax.set_title('Histogram')
+            self.ax.set_xlabel('Values')
+            self.ax.set_ylabel('Frequency')
+            self.ax.tick_params(axis='x', rotation=90)
 
         elif kind == "Scatter":
-            plt.figure()
-            plt.scatter(x, y, color='red', marker='o')
-            plt.title('Scatter Plot')
-            plt.xlabel('X Axis')
-            plt.ylabel('Y Axis')
-            plt.grid(True)
-            plt.show()
+            self.ax.scatter(x, y, color='red', marker='o')
+            self. ax.set_title('Scatter Plot')
+            self.ax.set_xlabel('X Axis')
+            self.ax.set_ylabel('Y Axis')
+            self. ax.grid(True)
 
         elif kind == "Bar":
-            plt.figure()
-            plt.bar(y, x, color='green')
-            plt.title('Bar Plot')
-            plt.xlabel('Categories')
-            plt.ylabel('Values')
-            plt.xticks(rotation=90)
-            plt.show()
+            self.ax.bar(y, x, color='green')
+            self.ax.set_title('Bar Plot')
+            self.ax.set_xlabel('Categories')
+            self. ax.set_ylabel('Values')
+            self. ax.tick_params(axis='x', rotation=90)
 
         elif kind == "Pie":
-            plt.figure()
-            plt.pie(x, labels=y, autopct='%1.1f%%', startangle=90)
-            plt.title('Pie Chart')
-            plt.axis('equal')  # Equal aspect ratio ensures the pie is drawn as a circle.
-            plt.show()
+            self.figure.clear()
+            self.ax.pie(x, labels=y, autopct='%1.1f%%', startangle=90)
+            self.ax.set_title('Pie Chart')
+            self.ax.set_aspect('equal', adjustable='box')
 
-    def get_figure(self):
-        return self.canvas
-
-    def get_toolbar(self):
-        return self.toolbar
-
+        self.canvas.draw()

@@ -23,7 +23,7 @@ def create_plot(x, title, kind, y=""):
 
     elif kind == "Scatter":
         plt.figure()
-        plt.scatter(x, y, color='red', marker='0')
+        plt.scatter(x, y, color='red', marker='o')
         plt.title('Scatter Plot')
         plt.xlabel('X Axis')
         plt.ylabel('Y Axis')

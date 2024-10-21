@@ -5,7 +5,8 @@ from PyQt5.QtGui import QPalette, QColor
 from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QMainWindow, QFileDialog, \
     QFrame, QScrollBar, QTableWidget, QTableWidgetItem, QWidget, QHeaderView, QAbstractScrollArea, QScrollArea
 import pandas as pd
-import graphs
+
+from graphs import Matplotlib
 
 class Table:
     
@@ -59,12 +60,14 @@ class Table:
 
         table_layout.addWidget(self.table)
 
-    def get_value(self, x, kind, y="", title=""):
+    def get_value(self, x, kind, frame, y="", title=""):
+
+        mt = Matplotlib(frame)
         try:
             if kind == "Hist":
-                graphs.create_plot(x=self.df[x], title=title, kind=kind)
+                mt.create_plot(x=self.df[x], title=title, kind=kind)
             else:
-                graphs.create_plot(x= self.df[x], y= self.df[y], title=title, kind=kind)
+                mt.create_plot(x= self.df[x], y= self.df[y], title=title, kind=kind)
         except KeyError:
             print("there's no such column")
 

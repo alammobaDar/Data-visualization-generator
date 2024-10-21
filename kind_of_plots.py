@@ -3,6 +3,7 @@ from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QVBoxLayout, QHBoxL
     QGridLayout, QMainWindow, QSizePolicy
 
 
+
 class All_Plots:
 
     def __init__(self, frame, type_):

@@ -155,19 +155,19 @@ class UI(QMainWindow):
 
         if self.selected_value == "Plot":
             pl = self.plot_instance
-            self.tb.get_value(x = pl.x_value, y = pl.y_value, kind = self.selected_value)
+            self.tb.get_value(x = pl.x_value, y = pl.y_value, kind = self.selected_value, frame=self.main_section)
         elif self.selected_value == "Hist":
             hs = self.hist_instance
-            self.tb.get_value(x = hs.x_value, kind = self.selected_value)
+            self.tb.get_value(x = hs.x_value, kind = self.selected_value, frame=self.main_section)
         elif self.selected_value == "Scatter":
             sc = self.scatter_instance
-            self.tb.get_value(x=sc.x_value, y=sc.y_value, kind=self.selected_value)
+            self.tb.get_value(x=sc.x_value, y=sc.y_value, kind=self.selected_value, frame=self.main_section)
         elif self.selected_value == "Bar":
             br = self.bar_instance
-            self.tb.get_value(x=br.values_value, y=br.category_value, kind=self.selected_value)
+            self.tb.get_value(x=br.values_value, y=br.category_value, kind=self.selected_value, frame=self.main_section)
         elif self.selected_value == "Pie":
             pi = self.pie_instance
-            self.tb.get_value(x=pi.x_value, y=pi.y_value, kind=self.selected_value)
+            self.tb.get_value(x=pi.x_value, y=pi.y_value, kind=self.selected_value, frame=self.main_section)
 
     def erase_frame(self):
         # Clear plot frames when switching between plot types

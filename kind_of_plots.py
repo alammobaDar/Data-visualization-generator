@@ -2,13 +2,12 @@ import sys
 from PyQt5.QtWidgets import QApplication, QLabel, QLineEdit, QVBoxLayout, QHBoxLayout, QPushButton, QFrame, QWidget, \
     QGridLayout, QMainWindow, QSizePolicy
 
-
-
 class All_Plots:
 
     def __init__(self, frame, type_):
         self.required_part(frame, type_)
         self.title(frame)
+        self.submit_button(frame)
 
     def title(self, frame):
         optional_label = QLabel("Optional", frame)
@@ -47,6 +46,29 @@ class All_Plots:
             self.y.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
             frame.layout().addWidget(self.y, 4, 2)
 
+    def labels(self, frame):
+        self.x_label_label = QLabel("X-label:", frame)
+        self.x_label_label.setProperty("class", "font_color")
+        frame.layout().addWidget(self.x_label_label, 7, 0)
+
+        self.x_label = QLineEdit(frame)
+        self.x_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        frame.layout().addWidget(self.x_label, 7, 2)
+
+        self.y_label_label = QLabel("Y-label:", frame)
+        self.y_label_label.setProperty("class", "font_color")
+        frame.layout().addWidget(self.y_label_label, 8, 0)
+
+        self.y_label = QLineEdit(frame)
+        self.y_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        frame.layout().addWidget(self.y_label, 8, 2)
+
+    def submit_button(self, frame):
+        self.submit = QPushButton("Submit", frame)
+        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
+        frame.layout().addWidget(self.submit, 9, 9)
+
+
 class Plot(All_Plots):
 
     def __init__(self, window):
@@ -58,26 +80,7 @@ class Plot(All_Plots):
         self.plot_frame.setLayout(layout)
 
         super().__init__(self.plot_frame, "plot")
-
-        self.x_label_label = QLabel("X-label:", self.plot_frame)
-        self.x_label_label.setProperty("class", "font_color")
-        layout.addWidget(self.x_label_label, 7, 0)
-
-        self.x_label = QLineEdit(self.plot_frame)
-        self.x_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.x_label, 7, 2)
-
-        self.y_label_label = QLabel("Y-label:", self.plot_frame)
-        self.y_label_label.setProperty("class", "font_color")
-        layout.addWidget(self.y_label_label, 8, 0)
-
-        self.y_label = QLineEdit(self.plot_frame)
-        self.y_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.y_label, 8, 2)
-
-        self.submit = QPushButton("Submit", self.plot_frame)
-        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.submit, 9, 9)
+        self.labels(self.plot_frame)
 
         self.x.textEdited.connect(self.text_changed)
         self.y.textEdited.connect(self.text_changed)
@@ -91,12 +94,6 @@ class Plot(All_Plots):
     def get_frame(self):
         return self.plot_frame
 
-
-
-
-
-
-
 class Hist(All_Plots):
     def __init__(self, window):
         self.window = window
@@ -106,26 +103,7 @@ class Hist(All_Plots):
         self.hist_frame.setLayout(layout)
 
         super().__init__(self.hist_frame, "hist")
-
-        self.x_label_label = QLabel("X-label:", self.hist_frame)
-        self.x_label_label.setProperty("class", "font_color")
-        layout.addWidget(self.x_label_label, 7, 0)
-
-        self.x_label = QLineEdit(self.hist_frame)
-        self.x_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.x_label, 7, 2)
-
-        self.y_label_label = QLabel("Y-label:", self.hist_frame)
-        self.y_label_label.setProperty("class", "font_color")
-        layout.addWidget(self.y_label_label, 8, 0)
-
-        self.y_label = QLineEdit(self.hist_frame)
-        self.y_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.y_label, 8, 2)
-
-        self.submit = QPushButton("Submit", self.hist_frame)
-        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.submit, 9, 9)
+        self.labels(self.hist_frame)
 
         self.x.textEdited.connect(self.text_changed)
         self._title.textEdited.connect(self.text_changed)
@@ -147,25 +125,7 @@ class Scatter(All_Plots):
 
         super().__init__(self.scatter_frame, "scatter")
 
-        self.x_label_label = QLabel("X-label:", self.scatter_frame)
-        self.x_label_label.setProperty("class", "font_color")
-        layout.addWidget(self.x_label_label, 7, 0)
-
-        self.x_label = QLineEdit(self.scatter_frame)
-        self.x_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.x_label, 7, 2)
-
-        self.y_label_label = QLabel("Y-label:", self.scatter_frame)
-        self.y_label_label.setProperty("class", "font_color")
-        layout.addWidget(self.y_label_label, 8, 0)
-
-        self.y_label = QLineEdit(self.scatter_frame)
-        self.y_label.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.y_label, 8, 2)
-
-        self.submit = QPushButton("Submit", self.scatter_frame)
-        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.submit, 9, 9)
+        self.labels(self.scatter_frame)
 
         self.x.textEdited.connect(self.text_changed)
         self.y.textEdited.connect(self.text_changed)
@@ -181,7 +141,6 @@ class Scatter(All_Plots):
 
 class Bar(All_Plots):
     def __init__(self, window):
-
 
         self.window = window
         self.bar_frame = QFrame(self.window)
@@ -207,10 +166,6 @@ class Bar(All_Plots):
         self.category.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.category, 4, 2)
 
-        self.submit = QPushButton("Submit", self.bar_frame)
-        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.submit, 7, 9)
-
         self.values.textEdited.connect(self.text_changed)
         self.category.textEdited.connect(self.text_changed)
         self._title.textEdited.connect(self.text_changed)
@@ -233,10 +188,6 @@ class Pie(All_Plots):
         self.pie_frame.setLayout(layout)
 
         super().__init__(self.pie_frame, "pie")
-
-        self.submit = QPushButton("Submit", self.pie_frame)
-        self.submit.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
-        layout.addWidget(self.submit, 7, 9)
 
         self.x.textEdited.connect(self.text_changed)
         self.y.textEdited.connect(self.text_changed)

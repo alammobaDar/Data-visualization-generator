@@ -62,7 +62,6 @@ class Matplotlib:
             self. ax.tick_params(axis='x', rotation=90)
 
         elif kind == "Pie":
-            self.figure.clear()
             self.ax.pie(x, labels=y, autopct='%1.1f%%', startangle=90)
             self.ax.set_title('Pie Chart')
             self.ax.set_aspect('equal', adjustable='box')

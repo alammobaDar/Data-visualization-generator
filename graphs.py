@@ -9,7 +9,6 @@ import matplotlib.pyplot as plt
 class Matplotlib:
     def __init__(self, frame):
         self.frame = frame
-        self.init_plot()
 
 
     def init_plot(self):
@@ -20,11 +19,19 @@ class Matplotlib:
         self.frame.layout().addWidget(self.toolbar)
         self.frame.layout().addWidget(self.canvas)
 
-    def clear_plot(self):
-        self.frame.layout().count()
+    def clear_plot(self, layout):
+        if layout is not None:
+            while layout.count():
+                item = layout.takeAt(0)
+                widget = item.widget()
+                if widget is not None:
+                    widget.deleteLater()
+                else:
+                    self.clear_plot(item.layout())
 
     def create_plot(self, x, title, kind, y=""):
-        self.figure.clear()
+        self.clear_plot(self.frame.layout())
+        self.init_plot()
         self.ax = self.figure.add_subplot(111)
 
         if kind == "Plot":

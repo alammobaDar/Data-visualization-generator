@@ -144,8 +144,6 @@ class UI(QMainWindow):
         self.bar_instance.submit.clicked.connect(self.submit_entry)
         self.pie_instance.submit.clicked.connect(self.submit_entry)
 
-        #load the plot frame
-        self.set_plot_frame()
 
     def set_plot_frame(self):
         self.figure_frame = QFrame(self.main_section)
@@ -206,6 +204,8 @@ class UI(QMainWindow):
             self.tb.show_df(df)
             self.main_section_layout.addWidget(self.tb.get_frame(), alignment=Qt.AlignTop | Qt.AlignCenter)
             self.tb.get_frame().setGraphicsEffect(self.shadow)
+            # load the plot frame
+            self.set_plot_frame()
 
 
 

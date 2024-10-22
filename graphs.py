@@ -10,7 +10,6 @@ class Matplotlib:
     def __init__(self, frame):
         self.frame = frame
 
-
     def init_plot(self):
         self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)

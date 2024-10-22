@@ -144,6 +144,13 @@ class UI(QMainWindow):
         self.bar_instance.submit.clicked.connect(self.submit_entry)
         self.pie_instance.submit.clicked.connect(self.submit_entry)
 
+        #load the plot frame
+        self.set_plot_frame()
+
+    def set_plot_frame(self):
+        self.figure_frame = QFrame(self.main_section)
+        plot_layout = QVBoxLayout(self.figure_frame)
+        self.main_section_layout.addWidget(self.figure_frame, alignment= Qt.AlignBottom | Qt.AlignCenter)
 
     def load_stylesheet(self):
         file = QFile("styles.qss")
@@ -152,23 +159,21 @@ class UI(QMainWindow):
             self.setStyleSheet(stream.readAll())
 
     def submit_entry(self):
-
-
         if self.selected_value == "Plot":
             pl = self.plot_instance
-            self.tb.get_value(x = pl.x_value, y = pl.y_value, kind = self.selected_value, frame=self.main_section)
+            self.tb.get_value(x = pl.x_value, y = pl.y_value, kind = self.selected_value, frame=self.figure_frame)
         elif self.selected_value == "Hist":
             hs = self.hist_instance
-            self.tb.get_value(x = hs.x_value, kind = self.selected_value, frame=self.main_section)
+            self.tb.get_value(x = hs.x_value, kind = self.selected_value, frame=self.figure_frame)
         elif self.selected_value == "Scatter":
             sc = self.scatter_instance
-            self.tb.get_value(x=sc.x_value, y=sc.y_value, kind=self.selected_value, frame=self.main_section)
+            self.tb.get_value(x=sc.x_value, y=sc.y_value, kind=self.selected_value, frame=self.figure_frame)
         elif self.selected_value == "Bar":
             br = self.bar_instance
-            self.tb.get_value(x=br.values_value, y=br.category_value, kind=self.selected_value, frame=self.main_section)
+            self.tb.get_value(x=br.values_value, y=br.category_value, kind=self.selected_value, frame=self.figure_frame)
         elif self.selected_value == "Pie":
             pi = self.pie_instance
-            self.tb.get_value(x=pi.x_value, y=pi.y_value, kind=self.selected_value, frame=self.main_section)
+            self.tb.get_value(x=pi.x_value, y=pi.y_value, kind=self.selected_value, frame=self.figure_frame)
 
     def erase_frame(self):
         # Clear plot frames when switching between plot types

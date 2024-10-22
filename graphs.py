@@ -1,5 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QDialog, QApplication, QPushButton, QVBoxLayout
+from PyQt5 import sip
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt5agg import NavigationToolbar2QT as NavigationToolbar
 import matplotlib.pyplot as plt
@@ -8,21 +9,25 @@ import matplotlib.pyplot as plt
 class Matplotlib:
     def __init__(self, frame):
         self.frame = frame
+        self.init_plot()
+
+
+    def init_plot(self):
         self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)
         self.toolbar = NavigationToolbar(self.canvas, self.frame)
 
+        self.frame.layout().addWidget(self.toolbar)
+        self.frame.layout().addWidget(self.canvas)
 
-
-        frame.layout().addWidget(self.toolbar)
-        frame.layout().addWidget(self.canvas)
+    def clear_plot(self):
+        self.frame.layout().count()
 
     def create_plot(self, x, title, kind, y=""):
         self.figure.clear()
         self.ax = self.figure.add_subplot(111)
 
         if kind == "Plot":
-            self.figure.clear()
             self.ax.plot(x, y)
             self.ax.set_title(title)
             self.ax.tick_params(axis='x', rotation=90)

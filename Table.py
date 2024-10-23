@@ -85,16 +85,65 @@ class info_window(QWidget):
 
     def __init__(self, df):
         super().__init__()
-        layout = QVBoxLayout()
+        layout = QHBoxLayout()
+        self.setWindowTitle("Information")
+        self.setObjectName("central_widget")
+
+        info_frame = QFrame(self)
+        info_layout = QVBoxLayout(info_frame)
+        info_frame.setProperty("class", "info_frame")
+        layout.addWidget(info_frame)
+
+        median_frame = QFrame(self)
+        median_layout = QVBoxLayout(median_frame)
+        median_frame.setProperty("class", "info_frame")
+        layout.addWidget(median_frame)
+
+        mean_frame = QFrame(self)
+        mean_layout = QVBoxLayout(mean_frame)
+        mean_frame.setProperty("class", "info_frame")
+        layout.addWidget(mean_frame)
 
         buffer = StringIO()
+
         df.info(buf=buffer)
         info_str = buffer.getvalue()
 
+        info_title = QLabel("Information")
+        info_layout.addWidget(info_title)
+        info_title.setProperty("class", "title")
+
         info_label = QLabel(info_str)
-        info_label.setObjectName()
-        layout.addWidget(info_label)
+        info_layout.addWidget(info_label)
+        info_label.setProperty("class", "font_color")
+
+        num_columns = df.select_dtypes(include=['int64', 'float64'])
+        median_values = num_columns.median()
+        median_str = median_values.to_string()
+        mean_values = num_columns.mean()
+        mean_str = mean_values.to_string()
+
+        median_title = QLabel("Median")
+        median_layout.addWidget(median_title, alignment=Qt.AlignTop)
+        median_title.setProperty("class", "title")
+
+        median_label = QLabel(median_str)
+        median_layout.addWidget(median_label, alignment=Qt.AlignTop)
+        median_label.setProperty("class", "font_color")
+
+        mean_title = QLabel("Mean")
+        mean_layout.addWidget(mean_title, alignment=Qt.AlignTop)
+        mean_title.setProperty("class", "title")
+
+        mean_label = QLabel(mean_str)
+        mean_layout.addWidget(mean_label, alignment=Qt.AlignTop )
+        mean_label.setProperty("class", "font_color")
+
         self.setLayout(layout)
 
-
-
+        self.load_stylesheet()
+    def load_stylesheet(self):
+        file = QFile("styles.qss")
+        if file.open(QFile.ReadOnly | QFile.Text):
+            stream = QTextStream(file)
+            self.setStyleSheet(stream.readAll())

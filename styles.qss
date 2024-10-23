@@ -26,6 +26,12 @@
     border-radius: 15px;
 }
 
+.info_frame {
+    background-color: #171717;
+    border-radius: 15px;
+    margin: 15px 15px 15px 15px;
+}
+
 .font_color{
     color: white;
     font-family: 'Poppins';

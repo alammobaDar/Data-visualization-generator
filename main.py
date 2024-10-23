@@ -7,13 +7,14 @@ from PyQt5.QtCore import Qt, QFile, QTextStream
 
 import kind_of_plots
 from Table import Table
-from Table import Table
+from Table import Table, info_window
 
 
 class UI(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.windows = []
 
         # Create drop self.shadow effect
         self.shadow = QGraphicsDropShadowEffect()
@@ -144,6 +145,10 @@ class UI(QMainWindow):
         self.bar_instance.submit.clicked.connect(self.submit_entry)
         self.pie_instance.submit.clicked.connect(self.submit_entry)
 
+    def set_info_button(self):
+        self.info_button = QPushButton("More Info", self.main_section)
+        self.main_section_layout.addWidget(self.info_button, alignment=Qt.AlignRight)
+        self.info_button.clicked.connect(self.show_info)
 
     def set_plot_frame(self):
         self.figure_frame = QFrame(self.main_section)
@@ -207,10 +212,14 @@ class UI(QMainWindow):
             self.tb.show_df(df)
             self.main_section_layout.addWidget(self.tb.get_frame(), alignment=Qt.AlignTop | Qt.AlignCenter)
             self.tb.get_frame().setGraphicsEffect(self.shadow)
+            # load info button
+            self.set_info_button()
             # load the plot frame
             self.set_plot_frame()
 
-
+    def show_info(self):
+        self.tb.get_another_window()
+        self.windows.append(self.tb.info)
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

@@ -1,4 +1,5 @@
 import sys
+from io import StringIO
 
 from PyQt5.QtCore import Qt, QFile, QTextStream
 from PyQt5.QtGui import QPalette, QColor
@@ -74,4 +75,26 @@ class Table:
 
     def get_frame(self):
         return self.tableFrame
+
+    def get_another_window(self):
+        self.info = info_window(self.df)
+        self.info.show()
+
+
+class info_window(QWidget):
+
+    def __init__(self, df):
+        super().__init__()
+        layout = QVBoxLayout()
+
+        buffer = StringIO()
+        df.info(buf=buffer)
+        info_str = buffer.getvalue()
+
+        info_label = QLabel(info_str)
+        info_label.setObjectName()
+        layout.addWidget(info_label)
+        self.setLayout(layout)
+
+
 

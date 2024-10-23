@@ -9,6 +9,7 @@ class Matplotlib:
         self.frame = frame
 
     def init_plot(self):
+
         self.figure = plt.figure()
         self.canvas = FigureCanvas(self.figure)
         self.toolbar = NavigationToolbar(self.canvas, self.frame)
@@ -54,7 +55,8 @@ class Matplotlib:
             self. ax.set_title('Scatter Plot')
             self.ax.set_xlabel('X Axis')
             self.ax.set_ylabel('Y Axis')
-            self. ax.grid(True)
+            self.ax.tick_params(axis='x', rotation=90)
+            self.ax.grid(True)
 
         elif kind == "Bar":
             self.ax.bar(y, x, color='green')

@@ -11,10 +11,11 @@ class Matplotlib:
     def init_plot(self):
 
         self.figure = plt.figure()
+        self.figure.tight_layout()
         self.canvas = FigureCanvas(self.figure)
         self.toolbar = NavigationToolbar(self.canvas, self.frame)
-        width_inches = self.frame.width()/96
-        height_inches = self.frame.height()/96
+        width_inches = self.frame.width()/90
+        height_inches = self.frame.height()/90
 
         self.figure.set_size_inches(width_inches, height_inches)
 

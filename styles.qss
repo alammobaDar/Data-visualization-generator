@@ -32,6 +32,8 @@
     margin: 15px 15px 15px 15px;
 }
 
+
+
 .font_color{
     color: white;
     font-family: 'Poppins';

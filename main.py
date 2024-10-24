@@ -147,15 +147,15 @@ class UI(QMainWindow):
 
     def set_info_button(self):
         self.info_button = QPushButton("More Info", self.main_section)
-        self.main_section_layout.addWidget(self.info_button, alignment=Qt.AlignRight)
+        self.main_section_layout.addWidget(self.info_button, alignment=Qt.AlignRight | Qt.AlignTop)
         self.info_button.clicked.connect(self.show_info)
 
     def set_plot_frame(self):
         self.figure_frame = QFrame(self.main_section)
         plot_layout = QVBoxLayout(self.figure_frame)
-        self.figure_frame.setFixedHeight(600)
+        self.figure_frame.setFixedHeight(500)
         self.figure_frame.setMinimumWidth(1000)
-        self.main_section_layout.addWidget(self.figure_frame, alignment= Qt.AlignBottom | Qt.AlignCenter)
+        self.main_section_layout.addWidget(self.figure_frame, alignment= Qt.AlignTop | Qt.AlignCenter)
         self.figure_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
     def load_stylesheet(self):

@@ -2,7 +2,7 @@ import sys
 
 from PyQt5.QtGui import QColor, QFontDatabase
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QFrame, \
-    QComboBox, QGridLayout, QSizePolicy, QGraphicsDropShadowEffect
+    QComboBox, QGridLayout, QSizePolicy, QGraphicsDropShadowEffect, QMessageBox
 from PyQt5.QtCore import Qt, QFile, QTextStream
 
 import kind_of_plots
@@ -165,21 +165,53 @@ class UI(QMainWindow):
             self.setStyleSheet(stream.readAll())
 
     def submit_entry(self):
-        if self.selected_value == "Plot":
-            pl = self.plot_instance
-            self.tb.get_value(x = pl.x_value, y = pl.y_value, kind = self.selected_value, frame=self.figure_frame)
-        elif self.selected_value == "Hist":
-            hs = self.hist_instance
-            self.tb.get_value(x = hs.x_value, kind = self.selected_value, frame=self.figure_frame)
-        elif self.selected_value == "Scatter":
-            sc = self.scatter_instance
-            self.tb.get_value(x=sc.x_value, y=sc.y_value, kind=self.selected_value, frame=self.figure_frame)
-        elif self.selected_value == "Bar":
-            br = self.bar_instance
-            self.tb.get_value(x=br.values_value, y=br.category_value, kind=self.selected_value, frame=self.figure_frame)
-        elif self.selected_value == "Pie":
-            pi = self.pie_instance
-            self.tb.get_value(x=pi.x_value, y=pi.y_value, kind=self.selected_value, frame=self.figure_frame)
+        try:
+            if self.selected_value == "Plot":
+                pl = self.plot_instance
+                self.tb.get_value(x = pl.x_value,
+                                  y = pl.y_value,
+                                  kind = self.selected_value,
+                                  frame=self.figure_frame,
+                                  title=pl.title_value,
+                                  y_label=pl.y_label_value,
+                                  x_label=pl.x_label_value
+                                  )
+            elif self.selected_value == "Hist":
+                hs = self.hist_instance
+                self.tb.get_value(x = hs.x_value,
+                                  kind = self.selected_value,
+                                  frame=self.figure_frame,
+                                  title=hs.title_value,
+                                  y_label=hs.y_label_value,
+                                  x_label=hs.x_label_value
+                                  )
+            elif self.selected_value == "Scatter":
+                sc = self.scatter_instance
+                self.tb.get_value(x=sc.x_value,
+                                  y=sc.y_value,
+                                  kind=self.selected_value,
+                                  frame=self.figure_frame,
+                                  title=sc.title_value,
+                                  y_label=sc.y_label_value,
+                                  x_label=sc.x_label_value
+                                  )
+            elif self.selected_value == "Bar":
+                br = self.bar_instance
+                self.tb.get_value(x=br.values_value,
+                                  y=br.category_value,
+                                  kind=self.selected_value,
+                                  frame=self.figure_frame,
+                                  title=br.title_value,
+                                  y_label=br.y_label_value,
+                                  x_label=br.x_label_value)
+            elif self.selected_value == "Pie":
+                pi = self.pie_instance
+                self.tb.get_value(x=pi.x_value, y=pi.y_value, kind=self.selected_value, frame=self.figure_frame)
+        except KeyError:
+            self.show_pop_up(KeyError)
+        except Exception:
+            self.show_pop_up(Exception)
+
 
     def erase_frame(self):
         # Clear plot frames when switching between plot types
@@ -220,6 +252,20 @@ class UI(QMainWindow):
     def show_info(self):
         self.tb.get_another_window()
         self.windows.append(self.tb.info)
+
+    def show_pop_up(self, error):
+        msg = QMessageBox()
+        msg.setWindowTitle("Error")
+        msg.setIcon(QMessageBox.Critical)
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.setDefaultButton(QMessageBox.Ok)
+        self.windows.append(msg)
+
+        if error == KeyError:
+            msg.setText("There's no such column.")
+        else:
+            msg.setText("There is something wrong.")
+        msg.show()
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

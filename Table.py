@@ -61,16 +61,13 @@ class Table:
 
         table_layout.addWidget(self.table)
 
-    def get_value(self, x, kind, frame, y="", title=""):
+    def get_value(self, x, kind, frame, y_label="", x_label="", title="", y=""):
 
         mt = Matplotlib(frame)
-        try:
-            if kind == "Hist":
-                mt.create_plot(x=self.df[x], title=title, kind=kind)
-            else:
-                mt.create_plot(x= self.df[x], y= self.df[y], title=title, kind=kind)
-        except KeyError:
-            print("there's no such column")
+        if kind == "Hist":
+            mt.create_plot(x=self.df[x], title=title, kind=kind, y_label=y_label, x_label= x_label)
+        else:
+            mt.create_plot(x= self.df[x], y= self.df[y], title=title, kind=kind, x_label=x_label, y_label=y_label)
 
 
     def get_frame(self):

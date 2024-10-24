@@ -29,9 +29,9 @@ class All_Plots:
         frame.layout().addWidget(required_label, 2, 0, 1, 10)
 
         if type_ != "bar":
-            x_label = QLabel("X-axis:", frame)
-            x_label.setProperty("class", "font_color")
-            frame.layout().addWidget(x_label, 3, 0)
+            x_axis_label = QLabel("X-axis:", frame)
+            x_axis_label.setProperty("class", "font_color")
+            frame.layout().addWidget(x_axis_label, 3, 0)
 
             self.x = QLineEdit(frame)
             self.x.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
@@ -85,11 +85,15 @@ class Plot(All_Plots):
         self.x.textEdited.connect(self.text_changed)
         self.y.textEdited.connect(self.text_changed)
         self._title.textEdited.connect(self.text_changed)
+        self.x_label.textEdited.connect(self.text_changed)
+        self.y_label.textEdited.connect(self.text_changed)
 
     def text_changed(self):
         self.x_value = self.x.text()
         self.y_value = self.y.text()
         self.title_value = self._title.text()
+        self.y_label_value = self.y_label.text()
+        self.x_label_value = self.x_label.text()
 
     def get_frame(self):
         return self.plot_frame
@@ -107,10 +111,14 @@ class Hist(All_Plots):
 
         self.x.textEdited.connect(self.text_changed)
         self._title.textEdited.connect(self.text_changed)
+        self.x_label.textEdited.connect(self.text_changed)
+        self.y_label.textEdited.connect(self.text_changed)
 
     def text_changed(self):
         self.x_value = self.x.text()
         self.title_value = self._title.text()
+        self.y_label_value = self.y_label.text()
+        self.x_label_value = self.x_label.text()
 
     def get_frame(self):
         return self.hist_frame
@@ -130,11 +138,15 @@ class Scatter(All_Plots):
         self.x.textEdited.connect(self.text_changed)
         self.y.textEdited.connect(self.text_changed)
         self._title.textEdited.connect(self.text_changed)
+        self.x_label.textEdited.connect(self.text_changed)
+        self.y_label.textEdited.connect(self.text_changed)
 
     def text_changed(self):
         self.x_value = self.x.text()
         self.y_value = self.y.text()
         self.title_value = self._title.text()
+        self.y_label_value = self.y_label.text()
+        self.x_label_value = self.x_label.text()
 
     def get_frame(self):
         return self.scatter_frame
@@ -166,14 +178,20 @@ class Bar(All_Plots):
         self.category.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.category, 4, 2)
 
+
+
         self.values.textEdited.connect(self.text_changed)
         self.category.textEdited.connect(self.text_changed)
         self._title.textEdited.connect(self.text_changed)
+        self.x_label.textEdited.connect(self.text_changed)
+        self.y_label.textEdited.connect(self.text_changed)
 
     def text_changed(self):
         self.values_value = self.values.text()
         self.category_value = self.category.text()
         self.title_value = self._title.text()
+        self.y_label_value = self.y_label.text()
+        self.x_label_value = self.x_label.text()
 
     def get_frame(self):
         return self.bar_frame

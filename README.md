@@ -1,1 +1,11 @@
-# Data-visualization-generator
+## Data Visualization Generator
+ - ### Project Description
+   - A UI Application for Pandas and Matplotlib for users don't have to code just to use the said libraries.
+   - A straight forward generator for data visualization. 
+   - Embedded with Matplotlib and Pandas for displaying and plotting the Csv or Excel files.
+ - ### Features
+   - **Upload Function** - accessing the file manager to fetch the desired file.
+   - **ComboBox** - for kind of plots - I only include _"plot"_, _"hist"_, _"scatter"_, _"bar"_, _"pie"_. Each of them have their own fields that was divided to two parts, _"Required"_ and _"Optional"_.
+   - **Data Frame** - displays the dataframe from the file you have chosen.\
+   - **Plot Figure** - Plot the column/s that you inputted base on the DataFrame.
+   - **More Info** - shows the df.info() as well as the mean and median of any integer/float type data.

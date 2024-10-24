@@ -69,7 +69,7 @@ class Matplotlib:
 
         elif kind == "Pie":
             self.ax.pie(x, labels=y, autopct='%1.1f%%', startangle=90)
-            self.ax.set_title('Pie Chart')
+            self.ax.set_title(title)
             self.ax.set_aspect('equal', adjustable='box')
 
         self.canvas.draw()

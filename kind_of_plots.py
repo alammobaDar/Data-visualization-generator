@@ -178,7 +178,7 @@ class Bar(All_Plots):
         self.category.setSizePolicy(QSizePolicy.Fixed, QSizePolicy.Fixed)
         layout.addWidget(self.category, 4, 2)
 
-
+        self.labels(self.bar_frame)
 
         self.values.textEdited.connect(self.text_changed)
         self.category.textEdited.connect(self.text_changed)

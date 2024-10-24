@@ -153,7 +153,7 @@ class UI(QMainWindow):
     def set_plot_frame(self):
         self.figure_frame = QFrame(self.main_section)
         plot_layout = QVBoxLayout(self.figure_frame)
-        self.figure_frame.setFixedHeight(500)
+        self.figure_frame.setFixedHeight(600)
         self.figure_frame.setMinimumWidth(1000)
         self.main_section_layout.addWidget(self.figure_frame, alignment= Qt.AlignBottom | Qt.AlignCenter)
         self.figure_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)

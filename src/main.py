@@ -2,12 +2,11 @@ import sys
 
 from PyQt5.QtGui import QColor, QFontDatabase
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton, QVBoxLayout, QHBoxLayout, QWidget, QFrame, \
-    QComboBox, QGridLayout, QSizePolicy, QGraphicsDropShadowEffect, QMessageBox
+    QComboBox, QSizePolicy, QGraphicsDropShadowEffect, QMessageBox
 from PyQt5.QtCore import Qt, QFile, QTextStream
 
 import kind_of_plots
 from Table import Table
-from Table import Table, info_window
 
 
 class UI(QMainWindow):
@@ -42,7 +41,7 @@ class UI(QMainWindow):
         self.title_bar.setFixedHeight(100)
         self.title_bar.setObjectName("title_bar")
         title_layout = QVBoxLayout(self.title_bar)
-        self._title = QLabel("Data Visualization Tool", self)
+        self._title = QLabel("PyPlot", self)
         self._title.setAlignment(Qt.AlignCenter)
         self._title.setProperty("class", "title")
         title_layout.addWidget(self._title)
@@ -159,7 +158,7 @@ class UI(QMainWindow):
         self.figure_frame.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
 
     def load_stylesheet(self):
-        file = QFile("styles.qss")
+        file = QFile("src/styles/styles.qss")
         if file.open(QFile.ReadOnly | QFile.Text):
             stream = QTextStream(file)
             self.setStyleSheet(stream.readAll())

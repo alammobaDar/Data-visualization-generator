@@ -1,12 +1,8 @@
-import sys
 from io import StringIO
-
 from PyQt5.QtCore import Qt, QFile, QTextStream
-from PyQt5.QtGui import QPalette, QColor
-from PyQt5.QtWidgets import QApplication, QLabel, QVBoxLayout, QHBoxLayout, QPushButton, QMainWindow, QFileDialog, \
-    QFrame, QScrollBar, QTableWidget, QTableWidgetItem, QWidget, QHeaderView, QAbstractScrollArea, QScrollArea
+from PyQt5.QtWidgets import QLabel, QVBoxLayout, QHBoxLayout, QFileDialog, \
+    QFrame, QTableWidget, QTableWidgetItem, QWidget, QAbstractScrollArea
 import pandas as pd
-
 from graphs import Matplotlib
 
 class Table:
@@ -140,7 +136,7 @@ class info_window(QWidget):
 
         self.load_stylesheet()
     def load_stylesheet(self):
-        file = QFile("styles.qss")
+        file = QFile("src/styles/styles.qss")
         if file.open(QFile.ReadOnly | QFile.Text):
             stream = QTextStream(file)
             self.setStyleSheet(stream.readAll())

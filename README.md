@@ -1,7 +1,7 @@
 # 📊 Data Visualization Generator
-A user-friendly desktop application built with PyQt5, Pandas, and Matplotlib. It allows users—especially those without coding experience—to easily visualize data from CSV or Excel files through an intuitive graphical interface. With just a few clicks, users can upload data, explore it, and generate plots without writing a single line of code.
 
----
+## 📝 Overview
+A user-friendly desktop application built with PyQt5, Pandas, and Matplotlib. It allows users—especially those without coding experience—to easily visualize data from CSV or Excel files through an intuitive graphical interface. With just a few clicks, users can upload data, explore it, and generate plots without writing a single line of code.
 
 ## ✨ Features
 
